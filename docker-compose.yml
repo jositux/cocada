@@ -1,0 +1,54 @@
+version: "2"
+services:
+  todonuxt:
+    image: "node:8.9.4-alpine"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+      - HOST=0.0.0.0
+    volumes:
+      - ./frontend:/home/node/app
+    ports:
+       - "3000:3000"
+    #expose:
+    #   - "3000"
+    # command: "npm start"
+    command: "npm run dev"
+
+
+  restapi:
+    image: "node:8.9.4-alpine"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+      - HOST=0.0.0.0
+      - PORT=3010
+    volumes:
+      - ./restAPI:/home/node/app
+    ports:
+       - "3010:3010"
+    # command: "npm start"
+    # command: "npm run dev"
+    command: "node /home/node/app"
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql
+    hostname: restAPI
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: 'restAPI'
+      MYSQL_USER: 'restAPI'
+      MYSQL_PASSWORD: 'restAPI'
+    volumes:
+      - ./mysql:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    depends_on: 
+      - mysql
