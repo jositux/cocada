@@ -1,6 +1,6 @@
 version: "2"
 services:
-  todonuxt:
+  cocada:
     image: "node:8.9.4-alpine"
     user: "node"
     working_dir: /home/node/app
@@ -14,6 +14,7 @@ services:
     #expose:
     #   - "3000"
     # command: "npm start"
+    # command "npm install"
     command: "npm run dev"
 
 
@@ -29,8 +30,7 @@ services:
       - ./restAPI:/home/node/app
     ports:
        - "3010:3010"
-    # command: "npm start"
-    # command: "npm run dev"
+    # command "npm install"
     command: "node /home/node/app"
     depends_on:
       - mysql
