@@ -1,0 +1,22 @@
+{
+  "memory": {
+    "name": "memory",
+    "connector": "memory"
+  },
+  "db": {
+    "host": "restAPI",
+    "port": 3306,
+    "url": "mysql://restAPI:restAPI@mysql/restAPI",
+    "database": "restAPI",
+    "password": "restAPI",
+    "name": "db",
+    "user": "restAPI",
+    "connector": "mysql"
+  },
+  "storage": {
+    "name": "storage",
+    "connector": "loopback-component-storage",
+    "provider": "filesystem",
+    "root": "./server/storage"
+  }
+}
