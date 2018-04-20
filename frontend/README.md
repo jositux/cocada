@@ -1,5 +1,4 @@
-# todo
-
+# CoCADa frontend
 > Nuxt.js + Vuetify.js project
 
 ## Build Setup
