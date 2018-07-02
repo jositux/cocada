@@ -28,34 +28,30 @@ module.exports = {
   ** Customize the progress bar color
   */
   loading: { color: "#3B8070" },
-  /*
-  ** axios
-  */
-  modules: [
-    "@nuxtjs/axios"
-    /* '@nuxtjs/auth' */
-  ],
+  modules: ["@nuxtjs/axios", "@nuxtjs/auth"],
   axios: {
     // proxyHeaders: false
     baseURL: "http://192.168.1.101:3010/api"
   },
-  /*auth: {
+  auth: {
     redirect: {
-      login: '/login',
-      home: '/',
-    },
-    endpoints: {
-      login: { url: 'Users/login', method: 'post' },
-      logout: { url: 'Users/logout', method: 'post' },
-      user: false
+      login: "/user/login",
+      home: "/"
     },
     strategies: {
       local: {
+        endpoints: {
+          login: { url: "Users/login", propertyName: "id" },
+          logout: { url: "Users/logout", method: "post" },
+          user: { url: "Users/me", method: "post", propertyName: "user" }
+        },
+        tokenRequired: true,
+        tokenType: ""
       }
-    } 
-  },*/
+    }
+  },
   router: {
-    /* middleware: ['auth'] */
+    middleware: ["auth"]
   },
   /*
   ** Build configuration
