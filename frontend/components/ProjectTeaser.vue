@@ -9,7 +9,9 @@
         {{ description }}
       </v-card-text>
       <v-card-actions>
-        <nuxt-link :to="'/Project/' + id">Enlace de Acción</nuxt-link>
+        <nuxt-link :to="'/Project/' + id">Ver</nuxt-link>
+        <nuxt-link :to="'/Project/' + id + '/edit'">Editar</nuxt-link>
+        <nuxt-link :to="'/Project/' + id + '/eliminar'">Eliminar</nuxt-link>
       </v-card-actions>
     </v-card>
   </v-flex>
