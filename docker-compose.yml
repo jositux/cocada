@@ -45,6 +45,8 @@ services:
       MYSQL_PASSWORD: 'restAPI'
     volumes:
       - ./mysql:/var/lib/mysql
+      # Soluciona el problema de codificacion latin a utf8
+      - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf
 
   adminer:
     image: adminer
