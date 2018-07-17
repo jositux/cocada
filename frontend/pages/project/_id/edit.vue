@@ -16,8 +16,7 @@
                 textarea
             ></v-text-field>
             
-            <div><v-icon large color="blue darken-2">backup</v-icon></div>
-            <div><img :src="project.thumbnail" :title="project.title"/></div>
+            <div><img :src="getAPI_URL(project.thumbnail)" :title="project.title"/></div>
             <div>
                 <upload-button title="Examinar" :selectedCallback="fileSelectedFunc">
             </upload-button></div>
@@ -31,6 +30,7 @@
 
 <script>
 import UploadButton from '@/components/UploadButton';
+import config from '@/nuxt.config'
 
 export default {
     components: {
@@ -53,6 +53,13 @@ export default {
       })
   },
   methods: {
+    getAPI_URL: function (url){
+      return config.axios.baseURL + url;
+    },
+    fileSelectedFunc(upload) {
+        this.project.thumbnail = ''
+        this.project.thumbnail = upload[0].upload_response.url
+    },
     save() {
         this.$axios
             .$patch("/Projects/" + this.$route.params.id, this.project)
