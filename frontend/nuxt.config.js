@@ -31,7 +31,8 @@ module.exports = {
   modules: ["@nuxtjs/axios", "@nuxtjs/auth"],
   axios: {
     // proxyHeaders: false
-    baseURL: "http://192.168.1.101:3010/api"
+    baseURL: "http://restapi:3010/api",
+    browserBaseURL: "http://localhost:3010/api"
   },
   auth: {
     redirect: {
