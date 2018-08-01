@@ -47,7 +47,8 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
       # Soluciona el problema de codificacion latin a utf8
-      - ./mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./other/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./other/wait-db.sh:/wait-db.sh
 
   adminer:
     image: adminer
