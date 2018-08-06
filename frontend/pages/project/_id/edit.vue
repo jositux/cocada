@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     getAPI_URL: function (url){
-      return config.axios.baseURL + url;
+      return config.axios.browserBaseURL + url;
     },
     fileSelectedFunc(upload) {
         this.project.thumbnail = ''
@@ -66,8 +66,11 @@ export default {
             .then(response => {
                 console.log(response);
             });
-        //this.$router.push('/')
-        this.$router.go(-1);
+        
+        this.$router.push('/')
+        this.$forceUpdate();
+
+        //this.$router.go(-1);
     }
   }
 }

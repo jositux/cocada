@@ -25,7 +25,7 @@ export default {
   props: ["image", "title", "description", "id"],
   methods: {
     getAPI_URL: function (url){
-      return config.axios.baseURL + url;
+      return config.axios.browserBaseURL + url;
     }
   }
 }

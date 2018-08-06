@@ -35,8 +35,10 @@ export default {
             .then(response => {
                 console.log(response);
             });
-        //this.$router.push('/')
-        this.$router.go(-1);
+        this.$router.push('/')
+        this.$forceUpdate();
+
+        //this.$router.go(-1);
       },
       cancel(){
           this.$router.push('/')

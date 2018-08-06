@@ -31,7 +31,7 @@ export default {
       errors: []
     }
   },
-  created() {
+  mounted() {
     this.$axios
       .$get("/Projects")
       .then(response => {
@@ -40,6 +40,12 @@ export default {
       .catch(e => {
         this.errors.push(e)
       })
+  },
+  asyncData ({ app }) {
+    return app.$axios.get("/Projects")
+    .then((res) => {
+      return { projects: res.data }
+    })
   }
 }
 </script>
