@@ -20,6 +20,17 @@ module.exports = {
         href:
           "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons"
       }
+    ],
+    script: [
+      {
+        src: "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"
+      },
+      { src: "/src/three.min.js" },
+      { src: "/src/orbitcontrols.js" },
+      { src: "/src/csg.js" },
+      { src: "/src/threecsg.js" },
+      { src: "/src/openjscad.js" },
+      { src: "/src/formats.js" }
     ]
   },
   plugins: ["~/plugins/vuetify.js"],
