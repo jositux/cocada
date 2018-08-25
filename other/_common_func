@@ -1,0 +1,41 @@
+# Espera a que un servicio http responda.
+# El áximo tiemop de espera es de 10 min
+function wait_http () (
+    local timeout=36000  # 10 min in Sec 10*60*60
+
+    local url=$1
+    
+    echo -n '['
+    local response_ok=0
+    while [ $timeout -ge 0 ]; do
+        curl "$url" -q > /dev/null 2>&1
+        EC=$?
+        if [ $EC -eq 0 ]; then
+            response_ok=1
+            break
+        fi
+        echo -n '.';
+
+        timeout=$(( $timeout - 5 ))
+        sleep 5
+    done
+
+    if [ $response_ok -eq 1 ]; then
+        echo "] ok"
+        exit 0
+    else
+        echo "] Error"
+        exit 1  
+    fi
+)
+
+function command_exist () (
+    local command=$1
+    if ! [ -x "$(command -v $1)" ]; then
+    echo "ERROR: Se requiere el comando $1." >&2
+        exit 1
+    else
+        echo "El comando \"$1\" esta instalado...ok"
+        exit 0
+    fi
+)

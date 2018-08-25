@@ -1,31 +1,15 @@
-#!/bin/sh
+#!/bin/bash
 echo "Preparando el entorno CoCADa"
 
 SCRIPT=$(readlink -f "$0")
 BASEDIR=$(dirname $SCRIPT)
+source $BASEDIR/other/_common_func
+
 cd "$BASEDIR"
 
-echo "Probando requisitos"
-if ! [ -x "$(command -v docker)" ]; then
-    echo "ERROR: Se requiere docker." >&2
-    exit 1
-else
-    echo "Docker esta instalado...ok"
-fi
-
-if ! [ -x "$(command -v docker-compose)" ]; then
-    echo "ERROR: Se requiere docker-compose." >&2
-    exit 1
-else
-    echo "Docker-compose esta instalado...ok"
-fi
-
-if ! [ -x "$(command -v curl)" ]; then
-    echo "ERROR: Se requiere curl." >&2
-    exit 1
-else
-    echo "Curl esta instalado...ok"
-fi
+command_exist 'docker' || exit 1;
+command_exist 'curl' || exit 1;
+command_exist 'docker-compose' || exit 1;
 
 echo "Descargando imágenes de docker hub."
 docker-compose pull
@@ -55,9 +39,9 @@ else
     exit 1
 fi
 
+docker-compose rm -s --force  > /dev/null 2>&1
 echo "****************************************************************"
 echo "Finalizadas las configuraciones iniciales."
-docker-compose rm -s --force  > /dev/null 2>&1
 echo "A partir de ahora puede lanzar CoCADa directamente desde run.sh"
 echo "****************************************************************"
 
