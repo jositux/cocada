@@ -25,12 +25,14 @@ module.exports = {
       {
         src: "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"
       },
-      { src: "/src/three.min.js" },
+      /*{ src: "/src/three.min.js" },
       { src: "/src/orbitcontrols.js" },
       { src: "/src/csg.js" },
       { src: "/src/threecsg.js" },
       { src: "/src/openjscad.js" },
-      { src: "/src/formats.js" }
+      { src: "/src/formats.js" }, */
+      { src: "/src/index.js" },
+      { src: '/src/web-built.js' }, // openscad-openjscad-translator
     ]
   },
   plugins: ["~/plugins/vuetify.js"],
