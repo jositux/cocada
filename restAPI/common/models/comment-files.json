@@ -1,0 +1,40 @@
+{
+  "name": "Comment_files",
+  "plural": "Comment-files",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "comment_id": {
+      "type": "string",
+      "required": true
+    },
+    "file_container": {
+      "type": "string",
+      "required": true
+    },
+    "file_name": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true
+    },
+    "draw": {
+      "type": "buffer"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "comment": {
+      "type": "belongsTo",
+      "model": "Comment",
+      "foreignKey": "comment_id"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

@@ -14,13 +14,15 @@
     ]
   },
   "User": {
-    "dataSource": "db", 
-    "acls": [{
-      "principalType": "ROLE",
-      "principalId": "$everyone",
-      "permission": "ALLOW",
-      "property": "me"
-    }]
+    "dataSource": "db",
+    "acls": [
+      {
+        "principalType": "ROLE",
+        "principalId": "$everyone",
+        "permission": "ALLOW",
+        "property": "me"
+      }
+    ]
   },
   "AccessToken": {
     "dataSource": "db",
@@ -48,5 +50,21 @@
   "container": {
     "dataSource": "storage",
     "public": true
+  },
+  "Version": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Comment": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Comment_files": {
+    "dataSource": "db",
+    "public": true
+  },
+  "File": {
+    "dataSource": "db",
+    "public": false
   }
 }

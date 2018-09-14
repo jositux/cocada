@@ -6,7 +6,10 @@ while [ $ready -ne 0 ]
 do
     echo -n '.'
     sleep 3
-    echo 'SELECT version();'| mysql -umysql -pmysql cocada > /dev/null 2>&1
+    # mongo admin --quiet --eval "printjson(db.auth('admin','mongodb'))" --quiet
+    # mongo admin --quiet --eval "printjson(db.version())"
+    mongo admin --quiet --eval "printjson(db.version())" > /dev/null 2>&1
     ready=$?
 done
 echo " listo."
+

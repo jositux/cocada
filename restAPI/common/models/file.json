@@ -1,34 +1,24 @@
 {
-  "name": "Project",
+  "name": "File",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "authorId": {
+    "project_id": {
       "type": "string",
       "required": true
     },
-    "thumbnail": {
-      "type": "string"
-    },
-    "title": {
+    "file_container": {
       "type": "string",
-      "required": true,
-      "index": true
-    },
-    "description": {
-      "type": "string"
-    },
-    "token": {
-      "type": "string"
-    },
-    "created": {
-      "type": "date",
       "required": true
     },
-    "status": {
+    "file_name": {
+      "type": "string",
+      "required": true
+    },
+    "url": {
       "type": "string"
     }
   },
