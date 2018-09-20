@@ -31,8 +31,9 @@ module.exports = {
       { src: "/src/threecsg.js" },
       { src: "/src/openjscad.js" },
       { src: "/src/formats.js" }, */
-      { src: "/src/index.js" },
-      { src: '/src/web-built.js' }, // openscad-openjscad-translator
+      // { src: "/src/index.js" },
+      // { src: '/src/web-built.js' }, // openscad-openjscad-translator
+      // { src: "/src/openjscad.js" }
     ]
   },
   plugins: ["~/plugins/vuetify.js"],
@@ -72,7 +73,13 @@ module.exports = {
   */
   build: {
     vendor: ["~/plugins/vuetify.js"],
-    extractCSS: true
+    extractCSS: true,
+    extend(config, { isDev, isClient }) {
+      config.node = {
+        fs: "empty"
+      }
+      // ....
+    }
     /*
     ** Run ESLint on save
     */
