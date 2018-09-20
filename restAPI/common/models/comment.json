@@ -1,0 +1,50 @@
+{
+  "name": "Comment",
+  "plural": "Comments",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "version_id": {
+      "type": "string"
+    },
+    "reply_id": {
+      "type": "string",
+      "required": false
+    },
+    "created": {
+      "type": "number",
+      "required": true
+    },
+    "comment": {
+      "type": "string",
+      "required": true
+    },
+    "author_id": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "version": {
+      "type": "belongsTo",
+      "model": "Version",
+      "foreignKey": "version_id"
+    },
+    "author": {
+      "type": "belongsTo",
+      "model": "Users",
+      "foreignKey": "author_id"
+    },
+    "reply_from": {
+      "type": "belongsTo",
+      "model": "Version",
+      "foreignKey": "reply_id"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

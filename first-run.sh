@@ -14,7 +14,7 @@ command_exist 'docker-compose' || exit 1;
 echo "Descargando imágenes de docker hub."
 docker-compose pull
 
-echo "Docker: Configurando la Base de Datos (mysql)"
+echo "Docker: Configurando la Base de Datos (mongodb)"
 docker-compose up -d db  > /dev/null 2>&1
 # Si la base de datos no inicio aún, espero.
 docker-compose exec db /wait-db.sh
@@ -44,5 +44,6 @@ echo "****************************************************************"
 echo "Finalizadas las configuraciones iniciales."
 echo "A partir de ahora puede lanzar CoCADa directamente desde run.sh"
 echo "****************************************************************"
+sleep 10
 
 $BASEDIR/run.sh

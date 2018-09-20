@@ -37,22 +37,26 @@ services:
       - db
 
   db:
-    image: mysql:5.6
-    hostname: db
+    image: mongo
+    # command: --smallfiles
+    # restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: cocada
-      MYSQL_USER: mysql
-      MYSQL_PASSWORD: mysql
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongodb
+      MONGO_INITDB_DATABASE: /docker-entrypoint-initdb.d
     volumes:
-      - ./mysql:/var/lib/mysql
-      # Soluciona el problema de codificacion latin a utf8
-      - ./other/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+#      - ./mongodb-init:/docker-entrypoint-initdb.d
+      - ./mongodb:/data/db
       - ./other/wait-db.sh:/wait-db.sh
 
-  adminer:
-    image: adminer
+  mongo-express:
+    image: mongo-express
+    # restart: always
+    environment:
+      ME_CONFIG_MONGODB_SERVER: db
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: mongodb
     ports:
-      - 8080:8080
-    depends_on: 
+      - 8081:8081
+    depends_on:
       - db

@@ -1,0 +1,56 @@
+{
+  "name": "Version",
+  "plural": "versions",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "required": true
+    },
+    "created": {
+      "type": "number",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string",
+      "required": true
+    },
+    "jscad_code": {
+      "type": "string",
+      "required": true
+    },
+    "jscad_parameters": {
+      "type": "string"
+    },
+    "author_id": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "project": {
+      "type": "belongsTo",
+      "model": "Project",
+      "foreignKey": "project_id"
+    },
+    "author": {
+      "type": "belongsTo",
+      "model": "Users",
+      "foreignKey": "author_id"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

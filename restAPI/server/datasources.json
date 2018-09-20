@@ -5,13 +5,13 @@
   },
   "db": {
     "host": "db",
-    "port": 3306,
-    "url": "mysql://mysql:mysql@db/cocada",
-    "database": "cocada",
-    "user": "mysql",
-    "password": "mysql",
-    "name": "db",
-    "connector": "mysql"
+    "port": 27017,
+    "url":  false,
+    "database": "admin",
+    "password": "mongodb",
+    "name": "cocada_db",
+    "user": "root",
+    "connector": "mongodb"
   },
   "storage": {
     "name": "storage",
