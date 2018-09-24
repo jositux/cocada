@@ -151,6 +151,9 @@ Processor = function(containerdiv, options) {
   this.onchange = null // function(Processor) for callback
   this.ondownload = null // function(Processor) for callback
 
+  // Marcos: watch change instnt update. (note, onchange exec on any parameter change, but not in checkbox change)
+  this.instantUpdate_onChange = null // function.
+
   this.currentObjects = [] // list of objects returned from rebuildObject*
   this.viewedObject = null // the object being rendered
 
@@ -322,6 +325,10 @@ Processor.prototype.createElements = function() {
   instantUpdateCheckbox.type = "checkbox" // Marcos , default ON.
   instantUpdateCheckbox.checked = "checked"
   instantUpdateCheckbox.id = "instantUpdate"
+  // Marcos
+  instantUpdateCheckbox.onchange = function(e) {
+    that.instantUpdate_onChange()
+  }
   this.parametersdiv.appendChild(instantUpdateCheckbox)
 
   element = document.getElementById("instantUpdateLabel")

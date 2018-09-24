@@ -3,22 +3,25 @@
   <v-layout row wrap>
     <v-flex xs8>
         <v-flex xs12>
-           <div oncontextmenu="return false;" id="viewerContext"></div>
+          <div oncontextmenu="return false;" id="viewerContext"></div>
         </v-flex>
         <v-flex xs12>
-              <div id="tail">
+              
+              <!--div id="tail">
                   <div id="statusdiv"></div>
               </div>
               <div id="errordiv"></div>
               <div id="parametersdiv"></div>
-              <div id="selectdiv"></div>
+              <div id="selectdiv"></div-->
         </v-flex>
     </v-flex>
 
     <v-flex xs4>
-      <div id="editFrame">
-        <div id="editor"></div>
-      </div>
+      <v-btn @click="updateCode()" >Actualizar</v-btn>
+      <v-btn @click="resetParameters()" >Reiniciar Parámetros</v-btn>
+        <div id="editFrame">
+          <div id="editor"></div>
+        </div>
     </v-flex>
       </v-layout>
 </v-container>
@@ -26,52 +29,57 @@
 </template>
 
 <script>
-
-//const Processor = require("@jscad/openjscad/dist/index.js")
-//const Editor = require("@jscad/openjscad/dist/index.js")
 export default {
   props: [],
   mounted () {
+    // Load openscad
     const Processor = require("~/commons/cocada_openjscad.js")
     const Editor = require("@jscad/openjscad/src/ui/editor")  
 
-    var gProcessor = new Processor(document.getElementById('viewerContext'))
-    gProcessor.createElements()
+    // Set processor
+    this.gProcessor = new Processor(document.getElementById('viewerContext'))
+    this.gProcessor.createElements()
 
-    var gEditor = Editor.setUpEditor('editor', gProcessor)
+    // Set Editor
+    this.gEditor = Editor.setUpEditor('editor', this.gProcessor)
+    Editor.putSourceInEditor(this.gEditor, this.CAD_code)
     
-    Editor.putSourceInEditor(gEditor, this.CAD_code, 'CoCADa.jscad')
-    gProcessor.setJsCad(this.CAD_code, 'CoCADa.jscad')
+    // Update Viewer
+    this.gProcessor.setJsCad(this.CAD_code, this.CAD_defaultFile)
 
-    //  gProcessor.updateFormatsDropdown()
-      //gProcessor.createElements()
+    // Javscript listener to update Vue model on user change.
+    document.getElementById("editor").firstChild.addEventListener("keyup", this.updateCode)
+    //this.gProcessor.onchange = this.updateInstant;
+    this.gProcessor.instantUpdate_onChange = this.updateInstant;
 
-
-      //gProcessor.setJsCad(document.getElementById('editor'))      
-     // gProcessor.rebuildSolid()
-  
-      //this.gProcessor.setJsCad(this.OpenJsCad_code());
-      //console.log(JSON.stringify(gProcessor.script))
-      //console.log(JSON.stringify(gProcessor.paramDefinitions))
-      
-      //  putSourceInEditor(gEditor, content, 'MyDesign.jscad')
-      //  gProcessor.setJsCad(content, 'MyDesign.jscad')
-
-      /*console.log(window.innerWidth)
-      console.log(window.innerHeight)
-      console.log(this.cssProps())*/
 
     },
   data () {
     return {
+        instantUpdate: true,
+        CAD_defaultFile: 'CoCADa.jscad', // Used in export. TODO: ¿why not work?
         CAD_code: "function main (p) { return cube({size: [10,10,p.size]}); } function getParameterDefinitions() { return [ { name: 'size', caption: 'Size', type: 'int', default: 16} ]; }",
-        //CAD_params: "function getParameterDefinitions() { return [ { name: 'size', caption: 'Size', type: 'int', default: 16} ]; }",
       }
   },
   methods: {
-    /*OpenJsCad_code () {
-      return this.CAD_code + this.CAD_params
-    },*/
+    updateInstant() {
+      // Mantiene actualizado el estado del checkbox instant update en openscad y nuxt.
+      this.instantUpdate = document.getElementById('instantUpdate').checked;
+    },
+    updateCode() {
+      console.log('updateCode')
+      // Manitiene actualizado el código entre openscad y nuxt
+      this.CAD_code = this.gEditor.getValue();
+      if (this.instantUpdate === true) {
+        console.log('update')
+        this.gProcessor.setJsCad(this.gEditor.getValue(), this.CAD_defaultFile)
+      }
+    },
+    resetParameters(){
+      // Reset user input values
+      this.gProcessor.paramControls = []
+      this.gProcessor.setJsCad(this.gEditor.getValue(), this.CAD_defaultFile)
+    },
     cssProps () {
       return {
         window_width: window.innerWidth,
