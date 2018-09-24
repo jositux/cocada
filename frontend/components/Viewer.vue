@@ -32,60 +32,16 @@
 export default {
   props: [],
   mounted () {
-    const Processor = require("@jscad/openjscad/src/jscad/processor.js")
+    const Processor = require("~/commons/cocada_openjscad.js")
     const Editor = require("@jscad/openjscad/src/ui/editor")  
 
-    var Options = {
-      viewer: {
-        camera: {
-          fov: 45, // field of view
-          angle: { x: -60, y: 0, z: -45 }, // view angle about XYZ axis
-          position: { x: 0, y: 0, z: 100 }, // initial position at XYZ
-          clip: { min: 0.5, max: 1000 // rendering outside this range is clipped
-          } },
-        plate: {
-          draw: true, // draw or not
-          size: 200, // plate size (X and Y)
-          // minor grid settings
-          m: {
-            i: 10, // number of units between minor grid lines
-            color: { r: 0.8, g: 0.8, b: 0.8, a: 0.5 // color
-            } },
-          // major grid settings
-          M: {
-            i: 100, // number of units between major grid lines
-            color: { r: 0.5, g: 0.5, b: 0.5, a: 0.5 // color
-            } }
-        },
-        axis: {
-          draw: true, // draw or not
-          x: {
-            neg: { r: 1.0, g: 0.5, b: 0.5, a: 0.8 }, // color in negative direction
-            pos: { r: 1.0, g: 0, b: 0, a: 1 // color in positive direction
-            } },
-          y: {
-            neg: { r: 0.5, g: 1.0, b: 0.5, a: 0.8 }, // color in negative direction
-            pos: { r: 0, g: 1.0, b: 0, a: 1 // color in positive direction
-            } },
-          z: {
-            neg: { r: 0.5, g: 0.5, b: 1.0, a: 0.8 }, // color in negative direction
-            pos: { r: 0, g: 0, b: 1.0, a: 1 // color in positive direction
-            } }
-        },
-        solid: {
-          faceColor: { r: 0.0, g: 0.4, b: 1.0, a: 1.0 }, // default face color
-          outlineColor: { r: 0.0, g: 0.0, b: 0.0, a: 0.1} // default outline color
-        },
-        background: {
-          color: { r: 0.93, g: 0.93, b: 0.93, a: 1.0 }
-        }
-      }
-    }
-    var gProcessor = new Processor(document.getElementById('viewerContext'), Options)
+    var gProcessor = new Processor(document.getElementById('viewerContext'))
+    gProcessor.createElements()
+
     var gEditor = Editor.setUpEditor('editor', gProcessor)
     
-    Editor.putSourceInEditor(gEditor, this.OpenJsCad_code(), 'CoCADa.jscad')
-    gProcessor.setJsCad(this.OpenJsCad_code(), 'CoCADa.jscad')
+    Editor.putSourceInEditor(gEditor, this.CAD_code, 'CoCADa.jscad')
+    gProcessor.setJsCad(this.CAD_code, 'CoCADa.jscad')
 
     //  gProcessor.updateFormatsDropdown()
       //gProcessor.createElements()
@@ -101,21 +57,21 @@ export default {
       //  putSourceInEditor(gEditor, content, 'MyDesign.jscad')
       //  gProcessor.setJsCad(content, 'MyDesign.jscad')
 
-      console.log(window.innerWidth)
+      /*console.log(window.innerWidth)
       console.log(window.innerHeight)
-      console.log(this.cssProps())
+      console.log(this.cssProps())*/
 
     },
   data () {
     return {
-        CAD_code: "function main (p) { return cube({size: [10,10,p.size]}); }",
-        CAD_params: "function getParameterDefinitions() { return [ { name: 'size', caption: 'Size', type: 'int', default: 16} ]; }",
+        CAD_code: "function main (p) { return cube({size: [10,10,p.size]}); } function getParameterDefinitions() { return [ { name: 'size', caption: 'Size', type: 'int', default: 16} ]; }",
+        //CAD_params: "function getParameterDefinitions() { return [ { name: 'size', caption: 'Size', type: 'int', default: 16} ]; }",
       }
   },
   methods: {
-    OpenJsCad_code () {
+    /*OpenJsCad_code () {
       return this.CAD_code + this.CAD_params
-    },
+    },*/
     cssProps () {
       return {
         window_width: window.innerWidth,
