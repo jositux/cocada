@@ -16,7 +16,7 @@ const Viewer = require("@jscad/openjscad/src/ui/viewer/jscad-viewer")
  * Ademá evita la llamada create_element que se usa en openjscad web.
  */
 var original_prototype = Processor.prototype
-Processor = function(containerdiv, options) {
+Processor = function(containerdiv, parametersdiv, options) {
   if (options === undefined) options = {}
   // the default options
   this.opts = {
@@ -142,6 +142,7 @@ Processor = function(containerdiv, options) {
   }
 
   this.containerdiv = containerdiv
+  this.parametersdiv = parametersdiv
 
   this.viewer = null
   this.builder = null
@@ -297,14 +298,17 @@ Processor.prototype.createElements = function() {
   this.downloadOutputFileLink.className = "downloadOutputFileLink" // so we can css it
   this.statusbuttons.appendChild(this.downloadOutputFileLink)
 
-  this.parametersdiv = this.containerdiv.parentElement.querySelector(
+  /* this.parametersdiv = this.containerdiv.parentElement.querySelector(
     "div#parametersdiv"
-  )
-  if (!this.parametersdiv) {
-    this.parametersdiv = document.createElement("div")
-    this.parametersdiv.id = "parametersdiv"
-    this.containerdiv.parentElement.appendChild(this.parametersdiv)
+  )*/
+  if (this.parametersdiv) {
+    var paramdiv = document.createElement("div")
+    paramdiv.id = "parametersdiv"
+    this.parametersdiv.appendChild(paramdiv)
+    // marcos: parameterdiv, no context.
+    this.parametersdiv = paramdiv
   }
+
   this.parameterstable = document.createElement("table")
   this.parameterstable.className = "parameterstable"
   this.parametersdiv.appendChild(this.parameterstable)
@@ -342,6 +346,28 @@ Processor.prototype.createElements = function() {
 
   this.enableItems()
   this.clearViewer()
+}
+
+// Make screenshot ... black... not work
+Processor.prototype.captureScreenshot = function() {
+  //https://jsfiddle.net/2pha/art388yv/
+
+  var gl = this.viewer.canvas.getContext("experimental-webgl", {
+    preserveDrawingBuffer: true
+  })
+
+  var dataUrl = gl.canvas.toDataURL("image/png", 1)
+  window.open(
+    dataUrl,
+    "Screenshot",
+    "toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes, resizable=yes"
+  )
+
+  return dataUrl
+}
+
+Processor.prototype.resetCamara = function() {
+  this.viewer.resetCamera()
 }
 
 /**

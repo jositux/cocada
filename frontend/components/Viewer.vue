@@ -3,25 +3,23 @@
   <v-layout row wrap>
     <v-flex xs8>
         <v-flex xs12>
+          <v-btn @click="updateCode()" >Actualizar</v-btn>
+          <v-btn @click="resetParameters()" >Reiniciar Parámetros</v-btn>
+          <v-btn @click="resetCamera">Reset Camera</v-btn>
+          <v-btn @click="toogleEditor()">Ocultar</v-btn>
+          <v-btn @click="commit()">Commit</v-btn>
+          <div><img height="200px" width="200px" :scr="screenshot"/></div>
           <div oncontextmenu="return false;" id="viewerContext"></div>
         </v-flex>
         <v-flex xs12>
-              
-              <!--div id="tail">
-                  <div id="statusdiv"></div>
-              </div>
-              <div id="errordiv"></div>
-              <div id="parametersdiv"></div>
-              <div id="selectdiv"></div-->
+            <div id="parameterContext"></div>
         </v-flex>
     </v-flex>
 
-    <v-flex xs4>
-      <v-btn @click="updateCode()" >Actualizar</v-btn>
-      <v-btn @click="resetParameters()" >Reiniciar Parámetros</v-btn>
-        <div id="editFrame">
-          <div id="editor"></div>
-        </div>
+    <v-flex xs4 v-bind:class="{ editorOculto: editor_oculto  }">
+          <div id="editFrame">
+            <div id="editor"></div>
+          </div>
     </v-flex>
       </v-layout>
 </v-container>
@@ -37,7 +35,7 @@ export default {
     const Editor = require("@jscad/openjscad/src/ui/editor")  
 
     // Set processor
-    this.gProcessor = new Processor(document.getElementById('viewerContext'))
+    this.gProcessor = new Processor(document.getElementById('viewerContext'), document.getElementById('parameterContext'))
     this.gProcessor.createElements()
 
     // Set Editor
@@ -59,12 +57,23 @@ export default {
         instantUpdate: true,
         CAD_defaultFile: 'CoCADa.jscad', // Used in export. TODO: ¿why not work?
         CAD_code: "function main (p) { return cube({size: [10,10,p.size]}); } function getParameterDefinitions() { return [ { name: 'size', caption: 'Size', type: 'int', default: 16} ]; }",
+        editor_oculto: false,
+        screenshot: null,
       }
   },
   methods: {
+    commit() {
+      this.screenshot = this.gProcessor.captureScreenshot()
+
+      
+
+    },
+    resetCamera(){
+      this.gProcessor.resetCamara();
+    },
     updateInstant() {
       // Mantiene actualizado el estado del checkbox instant update en openscad y nuxt.
-      this.instantUpdate = document.getElementById('instantUpdate').checked;
+      this.instantUpdate = document.getElementById('instantUpdate').checked
     },
     updateCode() {
       console.log('updateCode')
@@ -79,6 +88,9 @@ export default {
       // Reset user input values
       this.gProcessor.paramControls = []
       this.gProcessor.setJsCad(this.gEditor.getValue(), this.CAD_defaultFile)
+    },
+    toogleEditor() {
+      this.editor_oculto = !this.editor_oculto;
     },
     cssProps () {
       return {
@@ -140,6 +152,10 @@ export default {
     height: 100%;
     width: 100%;
     cursor: move;
+  }
+
+  .editorOculto{
+    display: none;
   }
 
 
