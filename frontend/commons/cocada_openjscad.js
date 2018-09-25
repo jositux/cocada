@@ -356,12 +356,15 @@ Processor.prototype.captureScreenshot = function() {
     preserveDrawingBuffer: true
   })
 
+  gl.animate()
+
   var dataUrl = gl.canvas.toDataURL("image/png", 1)
-  window.open(
+
+  /*window.open(
     dataUrl,
     "Screenshot",
     "toolbar=yes,location=yes,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=yes, resizable=yes"
-  )
+  )*/
 
   return dataUrl
 }

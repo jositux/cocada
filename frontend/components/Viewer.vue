@@ -8,7 +8,6 @@
           <v-btn @click="resetCamera">Reset Camera</v-btn>
           <v-btn @click="toogleEditor()">Ocultar</v-btn>
           <v-btn @click="commit()">Commit</v-btn>
-          <div><img height="200px" width="200px" :scr="screenshot"/></div>
           <div oncontextmenu="return false;" id="viewerContext"></div>
         </v-flex>
         <v-flex xs12>
@@ -19,6 +18,7 @@
     <v-flex xs4 v-bind:class="{ editorOculto: editor_oculto  }">
           <div id="editFrame">
             <div id="editor"></div>
+            <div><img :src="screenshot"/></div>
           </div>
     </v-flex>
       </v-layout>
