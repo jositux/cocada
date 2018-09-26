@@ -3,11 +3,11 @@
   <v-layout row wrap>
     <v-flex xs8>
         <v-flex xs12>
-          <v-btn @click="updateCode()" >Actualizar</v-btn>
-          <v-btn @click="resetParameters()" >Reiniciar Parámetros</v-btn>
+          <v-btn v-if="!instantUpdate" @click="do_update" >Actualizar</v-btn>
+          <v-btn @click="resetParameters" >Reiniciar Parámetros</v-btn>
           <v-btn @click="resetCamera">Reset Camera</v-btn>
-          <v-btn @click="toogleEditor()">Ocultar</v-btn>
-          <v-btn @click="commit()">Commit</v-btn>
+          <v-btn @click="toogleEditor">Ocultar</v-btn>
+          <v-btn @click="commit">Commit</v-btn>
           <div oncontextmenu="return false;" id="viewerContext"></div>
         </v-flex>
         <v-flex xs12>
@@ -64,9 +64,6 @@ export default {
   methods: {
     commit() {
       this.screenshot = this.gProcessor.captureScreenshot()
-
-      
-
     },
     resetCamera(){
       this.gProcessor.resetCamara();
@@ -76,13 +73,14 @@ export default {
       this.instantUpdate = document.getElementById('instantUpdate').checked
     },
     updateCode() {
-      console.log('updateCode')
       // Manitiene actualizado el código entre openscad y nuxt
       this.CAD_code = this.gEditor.getValue();
       if (this.instantUpdate === true) {
-        console.log('update')
-        this.gProcessor.setJsCad(this.gEditor.getValue(), this.CAD_defaultFile)
+        this.do_update()
       }
+    },
+    do_update(){
+      this.gProcessor.setJsCad(this.gEditor.getValue(), this.CAD_defaultFile)
     },
     resetParameters(){
       // Reset user input values
