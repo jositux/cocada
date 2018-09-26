@@ -1,7 +1,7 @@
 version: "2"
 services:
   cocada:
-    image: "node:8.9.4-alpine"
+    image: "node:8.9.4-alpine-git"
     user: "node"
     working_dir: /home/node/app
     environment:
