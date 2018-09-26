@@ -12,7 +12,7 @@ command_exist 'curl' || exit 1;
 command_exist 'docker-compose' || exit 1;
 
 echo "Construyendo imagen node+git"
-cd docker && ./build && cd ..
+cd docker && ./build.sh && cd ..
 
 echo "Descargando imágenes de docker hub."
 docker-compose pull
