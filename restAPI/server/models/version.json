@@ -1,8 +1,8 @@
 {
-  "name": "Version",
-  "plural": "versions",
+  "name": "version",
   "base": "PersistedModel",
   "idInjection": true,
+  "strict": true,
   "options": {
     "validateUpsert": true
   },
@@ -29,9 +29,6 @@
     "jscad_code": {
       "type": "string",
       "required": true
-    },
-    "jscad_parameters": {
-      "type": "string"
     },
     "author_id": {
       "type": "string",

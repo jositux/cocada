@@ -1,8 +1,8 @@
 {
-  "name": "Comment_files",
-  "plural": "Comment-files",
+  "name": "comment_files",
   "base": "PersistedModel",
   "idInjection": true,
+  "strict": true,
   "options": {
     "validateUpsert": true
   },

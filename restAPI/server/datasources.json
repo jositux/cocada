@@ -6,10 +6,10 @@
   "db": {
     "host": "db",
     "port": 27017,
-    "url":  false,
+    "url": false,
     "database": "admin",
     "password": "mongodb",
-    "name": "cocada_db",
+    "name": "db",
     "user": "root",
     "connector": "mongodb"
   },

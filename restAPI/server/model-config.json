@@ -15,6 +15,11 @@
   },
   "User": {
     "dataSource": "db",
+    "public": false
+  },
+  "user": {
+    "dataSource": "db",
+    "public": true,
     "acls": [
       {
         "principalType": "ROLE",
@@ -43,7 +48,7 @@
     "dataSource": "db",
     "public": false
   },
-  "Project": {
+  "project": {
     "dataSource": "db",
     "public": true
   },
@@ -51,19 +56,19 @@
     "dataSource": "storage",
     "public": true
   },
-  "Version": {
+  "version": {
     "dataSource": "db",
     "public": true
   },
-  "Comment": {
+  "comment": {
     "dataSource": "db",
     "public": true
   },
-  "Comment_files": {
+  "comment_files": {
     "dataSource": "db",
     "public": true
   },
-  "File": {
+  "file": {
     "dataSource": "db",
     "public": false
   }

@@ -128,28 +128,4 @@ module.exports = function(app) {
             }
           });
   });
-
-  User.me = function(req, next) {
-    var AccessToken = User.app.models.AccessToken;
-    AccessToken.findForRequest(req, {}, function(aux, accesstoken) {
-      var UserModel = User.app.models.User;
-      UserModel.findById(accesstoken.userId, function(error, user) {
-        next(error, user);
-      });
-    });
-  };
-
-  var originalSetup = User.setup;
-  User.setup = function() {
-        // call the original setup!
-    originalSetup.apply(this, arguments);
-  };
-
-  User.remoteMethod(
-    'me', {
-      accepts: {arg: 'req', type: 'object', http: {source: 'req'}},
-      returns: {arg: 'user', type: 'object'},
-      /* http: {verb: 'get'}, */
-    }
-  );
 };

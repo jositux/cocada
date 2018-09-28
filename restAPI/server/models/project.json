@@ -1,7 +1,8 @@
 {
-  "name": "Project",
+  "name": "project",
   "base": "PersistedModel",
   "idInjection": true,
+  "strict": true,
   "options": {
     "validateUpsert": true
   },
