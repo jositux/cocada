@@ -1,7 +1,8 @@
 version: "2"
 services:
   cocada:
-    image: "node:8.9.4-alpine-git"
+    image: "node:8.9.4-alpine-cocada"
+    # restart: always
     user: "node"
     working_dir: /home/node/app
     environment:
@@ -10,17 +11,15 @@ services:
     volumes:
       - ./frontend:/home/node/app
     ports:
-       - "3000:3000"
-    #expose:
-    #   - "3000"
+      - "3000:3000"
     # command: "npm start"
-    # command "npm install"
     command: "npm run dev"
     depends_on:
       - restapi
 
   restapi:
-    image: "node:8.9.4-alpine"
+    image: "node:8.9.4-alpine-cocada"
+    # restart: always
     user: "node"
     working_dir: /home/node/app
     environment:
@@ -30,15 +29,14 @@ services:
     volumes:
       - ./restAPI:/home/node/app
     ports:
-       - "3010:3010"
-    # command "npm install"
-    command: "node /home/node/app"
+      - "3010:3010"
+    #command: "node"
+    command: "npm run dev"
     depends_on:
       - db
 
   db:
     image: mongo
-    # command: --smallfiles
     # restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
