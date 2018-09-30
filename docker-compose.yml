@@ -2,12 +2,16 @@ version: "2"
 services:
   cocada:
     image: "node:8.9.4-alpine-cocada"
+    build:
+      context: ./docker
+      dockerfile: Dockerfile
     # restart: always
     user: "node"
     working_dir: /home/node/app
     environment:
       - NODE_ENV=development
       - HOST=0.0.0.0
+      - PORT=3000
     volumes:
       - ./frontend:/home/node/app
     ports:
@@ -19,6 +23,9 @@ services:
 
   restapi:
     image: "node:8.9.4-alpine-cocada"
+    #build: #build in cocada
+    #  context: ./docker
+    #  dockerfile: Dockerfile
     # restart: always
     user: "node"
     working_dir: /home/node/app

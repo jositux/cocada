@@ -11,11 +11,12 @@ command_exist 'docker' || exit 1;
 command_exist 'curl' || exit 1;
 command_exist 'docker-compose' || exit 1;
 
-echo "Construyendo imagen node+git"
-cd docker && ./build.sh && cd ..
+echo "Construyendo imagen node-cocada (node git python gcc make)"
+# cd docker && ./build.sh && cd ..
+docker-compose build
 
 echo "Descargando imágenes de docker hub."
-docker-compose pull
+docker-compose pull db mongo-express
 
 echo "Docker: Configurando la Base de Datos (mongodb)"
 docker-compose up -d db  > /dev/null 2>&1
@@ -42,6 +43,7 @@ else
     exit 1
 fi
 
+docker-compose rm -s --force  > /dev/null 2>&1
 docker-compose rm -s --force  > /dev/null 2>&1
 echo "****************************************************************"
 echo "Finalizadas las configuraciones iniciales."
