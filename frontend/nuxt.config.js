@@ -43,9 +43,9 @@ module.exports = {
     strategies: {
       local: {
         endpoints: {
-          login: { url: "Users/login", propertyName: "id" },
-          logout: { url: "Users/logout", method: "post" },
-          user: { url: "Users/me", method: "post", propertyName: "user" }
+          login: { url: "users/login", propertyName: "id" },
+          logout: { url: "users/logout", method: "post" },
+          user: { url: "users/me", method: "get", propertyName: "user" }
         },
         tokenRequired: true,
         tokenType: ""
