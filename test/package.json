@@ -1,0 +1,17 @@
+{
+  "name": "cocada",
+  "version": "0.1.0",
+  "description": "Collaborative CAD",
+  "main": "index.js",
+  "dependencies": {
+    "cypress": "^3.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:open": "./node_modules/cypress/bin/cypress open",
+    "cypress:run": "./node_modules/cypress/bin/cypress run  --config viewportWidth=1280,viewportHeight=720"
+  },
+  "author": "Marcos Henning <marcoshenning@gmail.com>, Josi Guaimas <jm.guaimas@gmail.com>",
+  "license": "ISC"
+}
