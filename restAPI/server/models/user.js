@@ -8,10 +8,12 @@ module.exports = function(user) {
   user.me = function(req, next) {
     var AccessToken = user.app.models.AccessToken;
     AccessToken.findForRequest(req, {}, function(aux, accesstoken) {
-      var userModel = user.app.models.user;
-      userModel.findById(accesstoken.userId, function(error, user) {
-        next(error, user);
-      });
+      if (accesstoken) {
+        var userModel = user.app.models.user;
+        userModel.findById(accesstoken.userId, function(error, user) {
+          next(error, user);
+        });
+      }
     });
   };
 
