@@ -35,7 +35,6 @@
       <v-toolbar-title v-text="title"/>
       <v-spacer></v-spacer>
       <UserSessionIndicator />
-      </v-toolbar-items>
     </v-toolbar>
     <v-content>
       <v-container>
