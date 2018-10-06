@@ -2,7 +2,7 @@
   <v-layout row wrap>
     <v-card-text style="height: 100px; position: relative">
     <div v-for="item in projects" :key="item.id">
-      <ProjectTeaser :id="item.id" :image="item.thumbnail" :title="item.title" :description="item.description" />
+      <ProjectTeaser :id="item.id" :image="item._lastVersion.image" :title="item.title" :description="item.description" />
     </div>
     <v-btn
     absolute
@@ -33,7 +33,7 @@ export default {
   },
   mounted() {
     this.$axios
-      .$get("/Projects")
+      .$get("/projects")
       .then(response => {
         this.projects = response
       })
@@ -41,11 +41,11 @@ export default {
         this.errors.push(e)
       })
   },
-  asyncData ({ app }) {
+  /*asyncData ({ app }) {
     return app.$axios.get("/Projects")
     .then((res) => {
       return { projects: res.data }
     })
-  }
+  }*/
 }
 </script>

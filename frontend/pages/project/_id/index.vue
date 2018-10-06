@@ -1,10 +1,5 @@
 <template>
-  <ProjectFull
-    :id="project.id"
-    :image="project.thumbnail"
-    :title="project.title"
-    :description="project.description"
-  />
+  <ProjectFull :project="this.project"/>
 </template>
 <script>
 import ProjectFull from "@/components/ProjectFull"

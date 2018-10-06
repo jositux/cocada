@@ -2,47 +2,48 @@
     <v-layout row wrap>
         <v-card-text style="height: 100px; position: relative">
             <h2>Nuevo Proyecto</h2>
+            <v-alert v-if="error"
+            :value="true"
+            color="error"
+            >
+            {{this.error}}
+            </v-alert>
+            <v-alert v-if="success"
+            :value="true"
+            color="success"
+            >
+            {{this.success}}
+            </v-alert>
             <v-text-field label="Nombre" v-model="project.title" required :error-messages="this.errors.title"></v-text-field>
             <v-text-field label="Descripción" v-model="project.description" required textarea :error-messages="this.errors.description"></v-text-field>
-            <!-- <upload-button title="Subir archivo JSCAD" :selectedCallback="fileSelectedFunc" accept="images/*" multiple=true chips=true thumb=true> -->
-            <upload-button title="Subir Imágen" :selectedCallback="fileSelectedFunc" accept="images/*" thumb=true>
-            </upload-button>
-            </div>
+            
             <div class="actions">
-                <v-btn v-on:click="saveProject">Guardar</v-btn>
+                <v-btn color="success" v-on:click="saveAction">Guardar</v-btn>
+                <v-btn v-on:click="cancelAction">Cancelar</v-btn>
             </div>
         </v-card-text>
     </v-layout>
 </template>
 
 <script>
-    import UploadButton from '@/components//UploadButton';
     export default {
-        components: {
-            UploadButton
-        },
         data() {
             return {
                 project: {
-                    "authorId": 0,
-                    "thumbnail": "",
+                    "authorId": this.$auth.$state.user.id,
                     "title": "",
-                    "description": "",
-                    "token": "",
-                    "created": "",
-                    "status": "",
+                    "description": ""
                 },
                 errors: {
                     title: [],
                     description: [],
-                }
+                },
+                error: '',
+                success: '',
+
             }
         },
         methods: {
-            fileSelectedFunc(upload) {
-                this.project.thumbnail = ''
-                this.project.thumbnail = upload[0].upload_response.url
-            },
             validateForm(){
               this.errors.title = []
               if (this.project.title.length == 0) {
@@ -55,23 +56,22 @@
               }
               this.$forceUpdate();  
             },
-            saveProject(){
+            saveAction(){
                 this.validateForm();
-                this.project.authorId = this.$auth.$state.user.id;
-                this.project.created = new Date().toISOString();
-                this.project.status = 'Active'
-
-                console.log(JSON.stringify(this.project))
-
-                this.$axios.post('/Projects', this.project)
+                console.log(this.project);
+                this.$axios.post('/projects', this.project)
                 .then( result => {
-                    console.log('save ok')
-                    this.$router.push('/')
+                    this.success = 'Proyecto Creado'
+                    this.$router.push('/project/' + result.data.id)
                     },
                     error => {
+                        console.log(error)
                         console.log('save fail')
                     }
                 )
+            },
+            cancelAction(){
+                this.$router.push('/')
             }
         }
     }

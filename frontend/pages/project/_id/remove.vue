@@ -3,8 +3,8 @@
         <v-card-text style="height: 100px; position: relative">
             <h2>Eliminar el Proyecto</h2>
             ¿Esta seguro de eliminar el proyecto "{{ project.title }}"?
-            <b-btn class="ml-3" variant="danger" @click="remove()">Eliminar</b-btn>
-            <b-btn class="ml-3" variant="danger" @click="cancel()">Cancelar</b-btn>
+            <v-btn class="ml-3" variant="danger" @click="removeAction()">Eliminar</v-btn>
+            <v-btn class="ml-3" variant="danger" @click="cancelAction()">Cancelar</v-btn>
         </v-card-text>
     </v-layout>
 </template>
@@ -29,7 +29,7 @@ export default {
       })
   },
   methods: {
-      remove() {
+      removeAction() {
           this.$axios
             .$delete("/Projects/" + this.$route.params.id)
             .then(response => {
@@ -40,7 +40,7 @@ export default {
 
         //this.$router.go(-1);
       },
-      cancel(){
+      cancelAction(){
           this.$router.push('/')
       }
   }
