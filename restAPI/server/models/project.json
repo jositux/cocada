@@ -4,15 +4,16 @@
   "idInjection": true,
   "strict": true,
   "options": {
-    "validateUpsert": true
+    "validateUpsert": true,
+    "strictObjectIDCoercion": true
+  },
+  "mixins": {
+    "TimeStamp" : true
   },
   "properties": {
     "authorId": {
       "type": "string",
       "required": true
-    },
-    "thumbnail": {
-      "type": "string"
     },
     "title": {
       "type": "string",
@@ -21,20 +22,21 @@
     },
     "description": {
       "type": "string"
-    },
-    "token": {
-      "type": "string"
-    },
-    "created": {
-      "type": "date",
-      "required": true
-    },
-    "status": {
-      "type": "string"
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "versions": {
+      "type": "belongsTo",
+      "model": "version",
+      "foreignKey": "project_id"
+    },
+    "author": {
+      "type": "belongsTo",
+      "model": "user",
+      "foreignKey": "id"
+    }
+  },
   "acls": [],
   "methods": {}
 }
