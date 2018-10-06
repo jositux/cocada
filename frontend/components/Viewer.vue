@@ -7,7 +7,7 @@
           <v-btn @click="resetParameters" >Reiniciar Parámetros</v-btn>
           <v-btn @click="resetCamera">Reset Camera</v-btn>
           <v-btn @click="toogleEditor">Ocultar</v-btn>
-          <v-btn @click="commit">Commit</v-btn>
+          <v-btn @click="openCommit">Commit</v-btn>
           <div oncontextmenu="return false;" id="viewerContext"></div>
         </v-flex>
         <v-flex xs12>
@@ -18,17 +18,56 @@
     <v-flex xs4 v-bind:class="{ editorOculto: editor_oculto  }">
           <div id="editFrame">
             <div id="editor"></div>
-            <div><img :src="screenshot"/></div>
           </div>
     </v-flex>
       </v-layout>
+      
+      <v-dialog
+      v-model="commitDialog"
+      persistent
+      max-width="800"
+    >
+      <v-card>
+        <v-card-title class="headline">Commit del proyecto</v-card-title>
+
+        <v-card-text>
+          <div><img :src="screenshot"/></div>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn 
+            @click="commitDialog = false"
+          >
+            Cancelar
+          </v-btn>
+
+          <v-btn
+            color="primary"
+            @click="commitAction"
+          >
+            Guardar
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 </v-container>
   
 </template>
 
 <script>
 export default {
-  props: [],
+  props: ["computedCode"],
+  data () {
+    return {
+        instantUpdate: true,
+        CAD_defaultFile: 'CoCADa.jscad', // Used in export. TODO: ¿why not work?
+        CAD_code: "function getParameterDefinitions() {\n\treturn [\n\t\t{ name: 'x',  caption: 'Size X', type: 'slider', default: 5, min: 2, max: 50, step: 1 }, \n\t\t{ name: 'y',  caption: 'Size Y', type: 'int', default: 5, min: 2, max: 50, step: 1 }, \n\t\t{ name: 'z',  caption: 'Size Z', type: 'float', default: 5, min: 2, max: 50, step: 0.25} \n\t];\n}\n\nfunction main(params){ \n\treturn cube([params.x, params.y, params.z]);\n}\n",
+        editor_oculto: false,
+        screenshot: null,
+        commitDialog: false
+      }
+  },
   mounted () {
     // Load openscad
     const Processor = require("~/commons/cocada_openjscad.js")
@@ -49,21 +88,19 @@ export default {
     document.getElementById("editor").firstChild.addEventListener("keyup", this.updateCode)
     //this.gProcessor.onchange = this.updateInstant;
     this.gProcessor.instantUpdate_onChange = this.updateInstant;
-
-
     },
-  data () {
-    return {
-        instantUpdate: true,
-        CAD_defaultFile: 'CoCADa.jscad', // Used in export. TODO: ¿why not work?
-        CAD_code: "function main (p) { return cube({size: [10,10,p.size]}); } function getParameterDefinitions() { return [ { name: 'size', caption: 'Size', type: 'int', default: 16} ]; }",
-        editor_oculto: false,
-        screenshot: null,
+    computed: {
+      computedCode1(){
+        return this.computedCode();
       }
-  },
+    },
   methods: {
-    commit() {
+    openCommit() {
       this.screenshot = this.gProcessor.captureScreenshot()
+      this.commitDialog = true;
+    },
+    commitAction() {
+
     },
     resetCamera(){
       this.gProcessor.resetCamara();
@@ -107,8 +144,8 @@ export default {
     font-weight: normal;
   }
 
-  #editHandle {
-  }
+  /*#editHandle {
+  }*/
 
   #editFrame {
     transition: width 0.4s;

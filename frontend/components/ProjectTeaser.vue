@@ -4,14 +4,14 @@
       <v-card-title class="headline">{{ title }}</v-card-title>
       <v-card-text>
         <div class="thumbnail">
-          <img :src="getAPI_URL(image)" :title="title" >
+          <nuxt-link :to="'/project/' + id"><img :src="getAPI_URL(image)" :title="title" ></nuxt-link>
         </div>
         {{ description }}
       </v-card-text>
       <v-card-actions>
-        <nuxt-link :to="'/Project/' + id">Ver</nuxt-link>
-        <nuxt-link :to="'/Project/' + id + '/edit'">Editar</nuxt-link>
-        <nuxt-link :to="'/Project/' + id + '/remove'">Eliminar</nuxt-link>
+        <nuxt-link :to="'/project/' + id">Ver</nuxt-link>
+        <nuxt-link :to="'/project/' + id + '/edit'">Editar</nuxt-link>
+        <nuxt-link :to="'/project/' + id + '/remove'">Eliminar</nuxt-link>
       </v-card-actions>
     </v-card>
   </v-flex>

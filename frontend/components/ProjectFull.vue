@@ -3,7 +3,7 @@
       <v-layout row wrap>
         <v-flex d-flex xs9>
           <div>
-            <Viewer/>
+            <Viewer :computedCode="computedCode"/>
           </div>
         </v-flex>
         <v-flex d-flex xs3>
@@ -49,12 +49,33 @@ import FileList from "@/components/FileList"
 import Viewer from "@/components/Viewer"
 
 export default {
-  props: ["image", "title", "description", "id"],
   components: {
+    Viewer,
     ChatList,
     HistoryList,
     FileList,
-    Viewer
+  },
+  data() {
+    return {
+      project: {},
+      errors: [],
+      commitDialog: false
+    };
+  },
+  created() {
+    this.$axios
+      .$get("/Projects/" + this.$route.params.id)
+      .then(response => {
+        this.project = response;
+      })
+      .catch(e => {
+        this.errors.push(e);
+      });
+  },
+  computed: {
+    computedCode(){
+      console.log('computedCode');
+    }
   }
 }
 </script>

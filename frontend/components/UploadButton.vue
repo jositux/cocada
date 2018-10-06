@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>{{ title }}</div>
+    <!--div>{{ title }}</div>
     <div>
       <v-icon large color="blue darken-2">backup</v-icon>
     </div>
@@ -21,7 +21,7 @@
         <input v-if="multiple" type="file" v-on:change="fileSelected" v-bind:accept="accept" multiple>
         <input v-else type="file" v-on:change="fileSelected" v-bind:accept="accept">
       </form>
-    </div>
+    </div-->
   </div>
 </template>
 
@@ -40,7 +40,8 @@
       multiple: false,
       chips: false,
       accept: String,
-      thumb: false
+      thumb: false,
+      upload_container: String
     },
     methods: {
       createURL(index) {
@@ -98,7 +99,7 @@
         //const ckey = key;
         this.$axios({
           method: "POST",
-          url: "/containers/test/upload",
+          url: "/containers/" + this.upload_container + "/upload",
           data: formData,
           headers: {
             'Content-Type': 'multipart/form-data'
