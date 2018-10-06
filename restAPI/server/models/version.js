@@ -1,5 +1,5 @@
 'use strict';
 
-module.exports = function(Version) {
+module.exports = function(version) {
 
 };

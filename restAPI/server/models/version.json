@@ -4,33 +4,33 @@
   "idInjection": true,
   "strict": true,
   "options": {
-    "validateUpsert": true
+    "validateUpsert": true,
+    "strictObjectIDCoercion": true
   },
   "properties": {
-    "project_id": {
+    "projectId": {
       "type": "string",
-      "required": true
+      "required": true,
+      "index": true
     },
-    "created": {
-      "type": "number",
-      "required": true
-    },
-    "name": {
+    "parentVersionId": {
       "type": "string",
-      "required": true
+      "required": false
     },
     "description": {
       "type": "string"
     },
     "image": {
       "type": "string",
-      "required": true
+      "required": true,
+      "default": "/containers/projects/download/default-project.png"
     },
-    "jscad_code": {
+    "jscadCode": {
       "type": "string",
-      "required": true
+      "required": true,
+      "default": "// Parámetros\nfunction getParameterDefinitions() { \n\treturn [ \n\t\t{ name: 'sizeX', caption: 'Tamaño X', type: 'slider', min:1, max:20, step:1, default: 9},\n            \t\t{ name: 'sizeY', caption: 'Tamaño Y', type: 'slider', min: 1, max: 20, default: 6},\n\t\t{ name: 'sizeZ', caption: 'Tamaño Z', type: 'float', min: 0.1, max: 20, step: 0.1, default: 3}\n\t];\n}\n// Algoritmo\nfunction main (param) {\n\treturn cube({size: [param.sizeX, param.sizeY,param.sizeZ]});\n}\n"
     },
-    "author_id": {
+    "authorId": {
       "type": "string",
       "required": true
     }
@@ -40,12 +40,17 @@
     "project": {
       "type": "belongsTo",
       "model": "Project",
-      "foreignKey": "project_id"
+      "foreignKey": "projectId"
     },
     "author": {
       "type": "belongsTo",
       "model": "Users",
-      "foreignKey": "author_id"
+      "foreignKey": "authorId"
+    },
+    "parent": {
+      "type": "belongsTo",
+      "model": "Version",
+      "foreignKey": "parentVersionId"
     }
   },
   "acls": [],
