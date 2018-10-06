@@ -23,3 +23,26 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+// Permite hacer login con usuario y contraseña.
+Cypress.Commands.add('loginByForm', (username, password) => {
+    cy.visit('/user/login')
+    
+    cy.get('[data-cy=login-username]')
+    .type(username).should('have.value', username)
+
+    cy.get('[data-cy=login-password]')
+    .type(username).should('have.value', password)
+
+    cy.get('[data-cy=login-submit]').click()
+
+    return cy.get('[data-cy=status-success]').contains('Acceso Correcto.');
+});
+
+
+// Permite hacer login con cuentas predefinidas en el archivo
+// de configuraciones de cypress
+Cypress.Commands.add('loginAccount', (user) => {
+    var account = Cypress.env(user + '_account') 
+    return cy.loginByForm(account.username, account.password)
+});

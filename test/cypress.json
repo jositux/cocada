@@ -1,1 +1,18 @@
-{}
+{   
+    "baseUrl": "http://localhost:3000",
+    "env": {
+        "host_api": "http://localhost:3010",
+        "admin_account": {
+            "username": "admin",
+            "password": "admin"
+        },
+        "design_account": {
+            "username": "design",
+            "password": "design"
+        },
+        "client_account": {
+            "username": "client",
+            "password": "client"
+        }
+    }
+}
