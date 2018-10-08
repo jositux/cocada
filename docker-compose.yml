@@ -82,5 +82,5 @@ services:
       - ./test:/home/node/app
     #command: "npm run cypress:run"
     command: "npm run cypress:open"
-    depends_on:
-      - cocada
+#    depends_on:
+#      - cocada
