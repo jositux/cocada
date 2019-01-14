@@ -9,6 +9,8 @@ const {
 } = require("@jscad/openjscad/src/io/formats")
 
 const Viewer = require("@jscad/openjscad/src/ui/viewer/jscad-viewer")
+const getParamValues = require("@jscad/openjscad/src/core/getParamValues")
+const getParamDefinitions = require("@jscad/openjscad/src/core/getParamDefinitions")
 
 /**
  * Sobre-escribo el constructor.
@@ -371,6 +373,38 @@ Processor.prototype.captureScreenshot = function() {
 
 Processor.prototype.resetCamara = function() {
   this.viewer.resetCamera()
+}
+
+Processor.prototype.getNewScript = function() {
+  // el script actual
+  var currentScript = this.script
+
+  // Esto retorna los valores actuales del formulario.
+  var currentValues = getParamValues(this.paramControls, false)
+
+  // Actualizo los valores por defecto
+  var currentParameters = getParamDefinitions(currentScript)
+  currentParameters = currentParameters.map(param => {
+    let ret = param
+    if (typeof currentValues[param.name] !== "undefined") {
+      ret.default = currentValues[param.name]
+    }
+    return ret
+  })
+
+  currentParameters = global.JSON.stringify(currentParameters, null, "\t")
+  currentParameters =
+    "function getParameterDefinitions(){\n\treturn " + currentParameters + "\n}"
+
+  return (
+    currentParameters +
+    "\n\n" +
+    currentScript.substr(
+      currentScript.indexOf("function main"),
+      currentScript.length
+    )
+  ) // TODO: encontrar otra manera.
+  //return currentParameters // currentParameters
 }
 
 /**
