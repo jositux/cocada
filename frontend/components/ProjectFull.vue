@@ -3,7 +3,7 @@
       <v-layout row wrap>
         <v-flex d-flex xs9>
           <div>
-            <Viewer :computedCode="computedCode"/>
+            <Viewer/>
           </div>
         </v-flex>
         <v-flex d-flex xs3>
@@ -11,17 +11,17 @@
                <v-tabs icons-and-text centered light>
                   <v-tabs-slider color="yellow"></v-tabs-slider>
                   <v-tab href="#tab-1">
-                    <v-icon small>history</v-icon>
+                    <v-icon small>chat</v-icon>
                   </v-tab>
                   <v-tab href="#tab-2">
                     <v-icon small>history</v-icon>
                   </v-tab>
                   <v-tab href="#tab-3">
-                    <v-icon small>history</v-icon>
+                    <v-icon small>cloud_upload</v-icon>
                   </v-tab>
                   <v-tab-item id="tab-1">
                     <v-card flat>
-                      <ChatList/>
+                      <CommentsList/>
                     </v-card>
                   </v-tab-item>
                   <v-tab-item id="tab-2">
@@ -31,7 +31,7 @@
                   </v-tab-item>
                   <v-tab-item id="tab-3">
                     <v-card flat>
-                      <FileList/>
+                      <FileList title="Subir archivos"/>
                     </v-card>
                   </v-tab-item>
                 </v-tabs>
@@ -43,7 +43,7 @@
 
 
 <script>
-import ChatList from "@/components/ChatList"
+import CommentsList from "@/components/CommentsList"
 import HistoryList from "@/components/HistoryList"
 import FileList from "@/components/FileList"
 import Viewer from "@/components/Viewer"
@@ -51,7 +51,7 @@ import Viewer from "@/components/Viewer"
 export default {
   components: {
     Viewer,
-    ChatList,
+    CommentsList,
     HistoryList,
     FileList,
   },
@@ -72,11 +72,11 @@ export default {
         this.errors.push(e);
       });
   },
-  computed: {
+  /*computed: {
     computedCode(){
       console.log('computedCode');
     }
-  }
+  }*/
 }
 </script>
 

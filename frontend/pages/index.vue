@@ -35,7 +35,10 @@ export default {
     this.$axios
       .$get("/projects")
       .then(response => {
-        this.projects = response
+        this.projects = response.reverse()
+      })
+      .then(response => {
+        this.projects = response.data
       })
       .catch(e => {
         this.errors.push(e)

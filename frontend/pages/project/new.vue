@@ -54,7 +54,7 @@
               if (this.project.description.length == 0) {
                 this.errors.description.push('La Descripción del Proyecto es obligatoria.')
               }
-              this.$forceUpdate();  
+              this.$forceUpdate();
             },
             saveAction(){
                 this.validateForm();

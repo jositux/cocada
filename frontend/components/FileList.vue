@@ -1,6 +1,6 @@
 <template>
-  <div class="btn btn-primary jbtn-file"> {{ title }}<input
-    type="file" v-on:change="fileSelected"></div>
+  <div class="btn btn-primary jbtn-file"> {{ title }}
+    <input type="file" v-on:change="fileSelected"></div>
 </template>
 
 

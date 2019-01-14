@@ -7,7 +7,7 @@
           <v-btn @click="resetParameters" >Reiniciar Parámetros</v-btn>
           <v-btn @click="resetCamera">Reset Camera</v-btn>
           <v-btn @click="toogleEditor">Ocultar</v-btn>
-          <v-btn @click="openCommit">Commit</v-btn>
+          <v-btn @click="openCommit" color="primary">Guardar</v-btn>
           <div oncontextmenu="return false;" id="viewerContext"></div>
         </v-flex>
         <v-flex xs12>
@@ -15,7 +15,7 @@
         </v-flex>
     </v-flex>
 
-    <v-flex xs4 v-bind:class="{ editorOculto: editor_oculto  }">
+    <v-flex xs4 v-bind:class="{ editorHide: editor_hide  }">
           <div id="editFrame">
             <div id="editor"></div>
           </div>
@@ -28,10 +28,30 @@
       max-width="800"
     >
       <v-card>
-        <v-card-title class="headline">Commit del proyecto</v-card-title>
-
-        <v-card-text>
-          <div><img :src="screenshot"/></div>
+        <v-card-title class="headline">Guardar el proyecto</v-card-title>
+          <v-alert v-if="version_error"
+              :value="true"
+              color="error"
+              >
+              {{this.version_error}}
+              </v-alert>
+          <v-card-text>
+          <v-alert v-if="version_success"
+            :value="true"
+            color="success"
+            >
+            {{this.version_success}}
+          </v-alert>
+          <div>
+            <v-text-field
+                id="descripcion"
+                name="descripcion"
+                label="Breve Descripción de los Cambios"
+                v-model="version.description"
+                textarea
+            ></v-text-field>
+            <img :src="version.screenshot"/>
+          </div>
         </v-card-text>
 
         <v-card-actions>
@@ -56,51 +76,155 @@
 </template>
 
 <script>
+import config from '../nuxt.config'
 export default {
   props: ["computedCode"],
   data () {
     return {
         instantUpdate: true,
         CAD_defaultFile: 'CoCADa.jscad', // Used in export. TODO: ¿why not work?
-        CAD_code: "function getParameterDefinitions() {\n\treturn [\n\t\t{ name: 'x',  caption: 'Size X', type: 'slider', default: 5, min: 2, max: 50, step: 1 }, \n\t\t{ name: 'y',  caption: 'Size Y', type: 'int', default: 5, min: 2, max: 50, step: 1 }, \n\t\t{ name: 'z',  caption: 'Size Z', type: 'float', default: 5, min: 2, max: 50, step: 0.25} \n\t];\n}\n\nfunction main(params){ \n\treturn cube([params.x, params.y, params.z]);\n}\n",
-        editor_oculto: false,
-        screenshot: null,
+        CAD_code: "",
+        editor_hide: false,
+        projectId: '',
+        version_success: '',
+        version_error: '',
+        version: {
+          projectId: '',
+          parentVersionId: '',
+          description: '',
+          image: '',
+          screenshot: null, /* RAW Image, fill image with upload url.*/
+          jscadCode: '',
+          authorId: '',
+        },
         commitDialog: false
       }
   },
+  created () {
+    // store url params
+    this.projectId = this.$route.params.id
+    this.versionId = this.$route.params.version_id
+  },
   mounted () {
-    // Load openscad
-    const Processor = require("~/commons/cocada_openjscad.js")
-    const Editor = require("@jscad/openjscad/src/ui/editor")  
+    this.$axios
+      .$get("/Versions/" + this.$route.params.version_id)
+      .then(response => {
+        this.CAD_code = response.jscadCode
 
-    // Set processor
-    this.gProcessor = new Processor(document.getElementById('viewerContext'), document.getElementById('parameterContext'))
-    this.gProcessor.createElements()
+        // Load openscad
+        const Processor = require("~/commons/cocada_openjscad.js")
+        const Editor = require("@jscad/openjscad/src/ui/editor")  
 
-    // Set Editor
-    this.gEditor = Editor.setUpEditor('editor', this.gProcessor)
-    Editor.putSourceInEditor(this.gEditor, this.CAD_code)
+        // Set processor
+        this.gProcessor = new Processor(document.getElementById('viewerContext'), document.getElementById('parameterContext'))
+        this.gProcessor.createElements()
+
+        // Set Editor
+        this.gEditor = Editor.setUpEditor('editor', this.gProcessor)
+        Editor.putSourceInEditor(this.gEditor, this.CAD_code)
+        
+        // Update Viewer
+        this.gProcessor.setJsCad(this.CAD_code, this.CAD_defaultFile)
+
+        // Javscript listener to update Vue model on user change.
+        document.getElementById("editor").firstChild.addEventListener("keyup", this.updateCode)
+        //this.gProcessor.onchange = this.updateInstant;
+        this.gProcessor.instantUpdate_onChange = this.updateInstant;
+      })
+      .catch(e => {
+        console.log(e)
+        //this.errors.push(e)
+      })
     
-    // Update Viewer
-    this.gProcessor.setJsCad(this.CAD_code, this.CAD_defaultFile)
-
-    // Javscript listener to update Vue model on user change.
-    document.getElementById("editor").firstChild.addEventListener("keyup", this.updateCode)
-    //this.gProcessor.onchange = this.updateInstant;
-    this.gProcessor.instantUpdate_onChange = this.updateInstant;
-    },
-    computed: {
-      computedCode1(){
-        return this.computedCode();
-      }
     },
   methods: {
+    getAPI_URL: function (url){
+      return config.axios.browserBaseURL + url;
+    },
     openCommit() {
-      this.screenshot = this.gProcessor.captureScreenshot()
+      // Clean Data
+      this.version.projectId = this.projectId
+      this.version.description = ''
+      this.version.screenshot = this.gProcessor.captureScreenshot()
       this.commitDialog = true;
     },
     commitAction() {
+      /* Upload RAW image and set url */
+      
+      // helper function: generate a new file from base64 String
+      const dataURLtoFile = (dataurl, filename) => {
+        const arr = dataurl.split(',');
+        const mime = arr[0].match(/:(.*?);/)[1]
+        const sliceSize = 1024;
+        const byteChars = window.atob(arr[1]);
+        const byteArrays = [];
 
+        for (let offset = 0, len = byteChars.length; offset < len; offset += sliceSize) {
+          let slice = byteChars.slice(offset, offset + sliceSize);
+
+          const byteNumbers = new Array(slice.length);
+          for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+          }
+
+          const byteArray = new Uint8Array(byteNumbers);
+
+          byteArrays.push(byteArray);
+        }
+
+        return new File(byteArrays, filename, {type: mime});
+      }
+
+        let formData = new FormData();
+        let timestamp = new Date().getTime();
+        let file = dataURLtoFile(this.version.screenshot, timestamp + '-screenshot-' + this.projectId + ".png")
+        
+        formData.append('file', file, file.name)
+        this.$axios({
+            method: "POST",
+            url: "/containers/screenshots/upload",
+            data: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(
+            result => {
+              let response = new Object;
+              response.filename = result.data.result.files.file[0].name
+              response.container = result.data.result.files.file[0].container
+              this.version.image = '/containers/' + result.data.result.files.file[0].container + '/download/' + result.data.result.files.file[0].name
+              //this.version.screenshot = this.version.image;
+
+
+               /* get new jsCadCode */
+              this.version.jscadCode =  this.gProcessor.getNewScript();
+              
+              /* Commit */
+              let data = this.version;
+              data.authorId = this.$auth.$state.user.id
+              delete data['screenshot']
+              
+              this.$axios.post('/versions', data)
+                        .then( result => {
+                            //this.success = 'Version Creado'
+                            //this.$router.push('/project/' + result.data.id)
+                            this.version_success = 'Guardado correcto, nueva versión ' + result.data.id
+                            this.commitDialog = false;
+                            //this.$router.push('/project/' + this.$route.params.id + "/" + result.data.id)
+                            // force full update
+                            window.location.href = '/project/' + this.$route.params.id + "/" + result.data.id
+                            },
+                            error => {
+                                console.log(error)
+                                console.log('Save version fail')
+                                this.version_error = 'Problemas al guardar'
+                            }
+                        )
+            },
+            error => {
+              console.error('error: ' + error)
+            }
+          )
     },
     resetCamera(){
       this.gProcessor.resetCamara();
@@ -125,7 +249,7 @@ export default {
       this.gProcessor.setJsCad(this.gEditor.getValue(), this.CAD_defaultFile)
     },
     toogleEditor() {
-      this.editor_oculto = !this.editor_oculto;
+      this.editor_hide = !this.editor_hide;
     },
     cssProps () {
       return {
@@ -189,7 +313,7 @@ export default {
     cursor: move;
   }
 
-  .editorOculto{
+  .editorHide{
     display: none;
   }
 
