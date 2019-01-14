@@ -6,6 +6,9 @@
   "options": {
     "validateUpsert": true
   },
+  "mixins": {
+    "TimeStamp" : true
+  },
   "properties": {
     "version_id": {
       "type": "string"
@@ -13,10 +16,6 @@
     "reply_id": {
       "type": "string",
       "required": false
-    },
-    "created": {
-      "type": "number",
-      "required": true
     },
     "comment": {
       "type": "string",
