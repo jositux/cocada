@@ -59,7 +59,7 @@ export default {
       this.$axios({
         method: 'get',
         url: '/Versions',
-        params: {"filter":{"where":{"projectId":this.$route.params.id}}, "order":{"createdAt":"ASC"}}
+        params: {"filter":{"where":{"projectId":this.$route.params.id}}}
       })
       .then(response => {
         this.versions = response.data.reverse()

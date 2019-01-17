@@ -1,7 +1,7 @@
 module.exports = {
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
     title: "CoCADa",
     meta: [
@@ -22,11 +22,11 @@ module.exports = {
     ],
     script: []
   },
-  plugins: ["~/plugins/vuetify.js"],
+  plugins: ["~/plugins/vuetify.js", "~/plugins/vue-signature.js"],
   css: ["~/assets/style/app.styl"],
   /*
-  ** Customize the progress bar color
-  */
+   ** Customize the progress bar color
+   */
   loading: { color: "#3B8070" },
   modules: ["@nuxtjs/axios", "@nuxtjs/auth"],
   axios: {
@@ -55,8 +55,8 @@ module.exports = {
     middleware: ["auth"]
   },
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
     vendor: ["~/plugins/vuetify.js"],
     extractCSS: true,
@@ -67,8 +67,8 @@ module.exports = {
       // ....
     }
     /*
-    ** Run ESLint on save
-    */
+     ** Run ESLint on save
+     */
     /*extend(config, ctx) {
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({

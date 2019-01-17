@@ -78,7 +78,7 @@
 <script>
 import config from '../nuxt.config'
 export default {
-  props: ["computedCode"],
+  props: {},
   data () {
     return {
         instantUpdate: true,

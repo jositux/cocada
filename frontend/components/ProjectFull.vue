@@ -21,12 +21,12 @@
                   </v-tab>
                   <v-tab-item id="tab-1">
                     <v-card flat>
-                      <CommentsList/>
+                      <CommentsList :background="getScreenShot"/>
                     </v-card>
                   </v-tab-item>
                   <v-tab-item id="tab-2">
                     <v-card flat>
-                      <HistoryList/>
+                      <VersionList/>
                     </v-card>
                   </v-tab-item>
                   <v-tab-item id="tab-3">
@@ -44,7 +44,7 @@
 
 <script>
 import CommentsList from "@/components/CommentsList"
-import HistoryList from "@/components/HistoryList"
+import VersionList from "@/components/VersionList"
 import FileList from "@/components/FileList"
 import Viewer from "@/components/Viewer"
 
@@ -52,7 +52,7 @@ export default {
   components: {
     Viewer,
     CommentsList,
-    HistoryList,
+    VersionList,
     FileList,
   },
   data() {
@@ -72,6 +72,9 @@ export default {
         this.errors.push(e);
       });
   },
+  getScreenShot() {
+    return 'holis'
+  }
   /*computed: {
     computedCode(){
       console.log('computedCode');

@@ -4,26 +4,34 @@
   "idInjection": true,
   "strict": true,
   "options": {
-    "validateUpsert": true
+    "validateUpsert": true,
+    "strictObjectIDCoercion": true
   },
   "mixins": {
     "TimeStamp" : true
   },
   "properties": {
-    "version_id": {
-      "type": "string"
-    },
-    "reply_id": {
+    "versionId": {
       "type": "string",
-      "required": false
+      "required": true,
+      "index": true
+    },
+    "replyId": {
+      "type": "string",
+      "required": false,
+      "index": true
     },
     "comment": {
       "type": "string",
       "required": true
     },
-    "author_id": {
+    "authorId": {
       "type": "string",
-      "required": true
+      "required": true,
+      "index": true
+    },
+    "files_list": {
+      "type": "array"
     }
   },
   "validations": [],
@@ -31,17 +39,17 @@
     "version": {
       "type": "belongsTo",
       "model": "Version",
-      "foreignKey": "version_id"
+      "foreignKey": "versionId"
     },
     "author": {
       "type": "belongsTo",
       "model": "Users",
-      "foreignKey": "author_id"
+      "foreignKey": "authorId"
     },
     "reply_from": {
       "type": "belongsTo",
       "model": "Version",
-      "foreignKey": "reply_id"
+      "foreignKey": "replyId"
     }
   },
   "acls": [],
