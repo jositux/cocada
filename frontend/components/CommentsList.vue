@@ -55,17 +55,8 @@ export default {
   },
   props: {},
   created () {
-    this.$axios({
-        method: 'get',
-        url: '/Comments',
-        params: {"filter":{"where":{"versionId":this.$route.params.version_id}}}
-      })
-      .then(response => {
-        this.comments = response.data;
-      })
-      .catch(e => {
-        this.errors.push(e);
-      });
+    this.fetchComments()
+    this.timer = setInterval(this.fetchComments, 3000)
   },
   data () {
     return {
@@ -83,6 +74,19 @@ export default {
       }
     },
   methods: {
+    fetchComments: function() {
+      this.$axios({
+        method: 'get',
+        url: '/Comments',
+        params: {"filter":{"where":{"versionId":this.$route.params.version_id}}}
+      })
+      .then(response => {
+        this.comments = response.data;
+      })
+      .catch(e => {
+        this.errors.push(e);
+      });
+    },
     openDraw: function(){
       this.dialogDraw = true
       
@@ -162,7 +166,7 @@ export default {
 
           this.dialogDraw = false
     },
-    uploadFile: function(e) {
+    uploadFile: function(up) {
       // helper function: generate a new file from base64 String
       const dataURLtoFile = (dataurl, filename) => {
         const arr = dataurl.split(',');
@@ -191,7 +195,8 @@ export default {
         reader.onload = (e) => {
           let formData = new FormData();
           let timestamp = new Date().getTime();
-          let file = dataURLtoFile(e.target.result , timestamp + '-upload-' + this.$route.params.id + '-' + this.$route.params.version_id + ".png")
+  
+          let file = dataURLtoFile(e.target.result , timestamp + '-upload-' + this.$route.params.id + '-' + this.$route.params.version_id + up.target.files[0].name)
 
           formData.append('file', file, file.name)
           this.$axios({
@@ -207,6 +212,11 @@ export default {
                 //console.log(result.data.result.files.file[0])
                 this.send.files_list.push(result.data.result.files.file[0])
 
+                // Force Reset
+                const input = this.$refs.file_upload;
+                input.type = 'text';
+                input.type = 'file';
+
                 
               },
               error => {
@@ -215,7 +225,7 @@ export default {
               }
             )
         }
-        reader.readAsDataURL(e.target.files[0])
+        reader.readAsDataURL(up.target.files[0])
     },
     getFecha: function(fecha) {
       var fechaR = new Date(fecha)
