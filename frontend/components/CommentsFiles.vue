@@ -1,13 +1,13 @@
 <template>
     <div>
-    <div v-for="file in files" :key="file.name">
+    <div v-for="(file, index) in files" :key="file.name">
         <div class="text-xs-center">
             <v-chip v-if="!showFileInModal(file.type)" close small>
                 <a :href="getAPI_URL('/containers/' + file.container + '/download/' + file.name)" :title="file.name" class="file-chip">
                 <span v-html= "truncateText(file.name)" />
                 </a> 
             </v-chip>
-            <FileViewer :title="file.name" :alt="file.name" :url="getAPI_URL('/containers/' + file.container + '/download/' + file.name)" :name="file.name"/>
+            <FileViewer v-else :title="file.name" :alt="file.name" :url="getAPI_URL('/containers/' + file.container + '/download/' + file.name)" :name="file.name"/>
         </div>
     </div>
     </div>
