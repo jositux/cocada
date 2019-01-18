@@ -5,12 +5,12 @@ module.exports = function(Comment) {
   Comment.observe('loaded', function(ctx, next) {
     if (ctx.instance) {
       var x = Comment.app.models.user.find({
-        where: {'id': ctx.instance.author_id},
+        where: {'id': ctx.instance.authorId},
         limit: 1,
-      }, function(err, versions) {
+      }, function(err, author) {
         if (err) return next(err);
-        if (versions.length) {
-          ctx.instance.author = versions.pop();
+        if (author.length) {
+          ctx.instance.author = author.pop();
         } else {
           ctx.instance.author = {}; // this will never happen. See 'after save'
         }
