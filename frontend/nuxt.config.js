@@ -32,7 +32,7 @@ module.exports = {
   axios: {
     // proxyHeaders: false
     baseURL: "http://restapi:3010/api",
-    browserBaseURL: "http://localhost:3010/api"
+    browserBaseURL: "http://cocada:3010/api"
   },
   auth: {
     redirect: {
