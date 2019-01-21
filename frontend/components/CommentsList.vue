@@ -32,7 +32,7 @@
                   <v-card-title class="headline">Dibujar</v-card-title>
                   <v-card-text>
                   <VueSignaturePad
-                      height="500px"
+                      height="350px"
                       width="800px"
                       ref="draw"
                     />
@@ -92,7 +92,7 @@ export default {
       
       // Forzo la redimension del canvas
       this.$refs.draw.$el.childNodes[0].width=800
-      this.$refs.draw.$el.childNodes[0].height=500
+      this.$refs.draw.$el.childNodes[0].height=350
 
       this.$refs.draw.clearSignature()
 
