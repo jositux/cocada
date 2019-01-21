@@ -8,6 +8,15 @@
         </v-flex>
         <v-flex d-flex xs3>
             <div>
+            <v-text-field
+            outline
+            label="Enlace para 
+            compartir"
+            :value="shareURL()"
+            append-icon="share"
+          ></v-text-field>
+
+
                <v-tabs icons-and-text centered light>
                   <v-tabs-slider color="yellow"></v-tabs-slider>
                   <v-tab href="#tab-1">
@@ -47,6 +56,7 @@ import CommentsList from "@/components/CommentsList"
 import VersionList from "@/components/VersionList"
 import FileList from "@/components/FileList"
 import Viewer from "@/components/Viewer"
+import config from '@/nuxt.config'
 
 export default {
   components: {
@@ -72,14 +82,12 @@ export default {
         this.errors.push(e);
       });
   },
-  getScreenShot() {
-    return 'holis'
-  }
-  /*computed: {
-    computedCode(){
-      console.log('computedCode');
+  methods: {
+    shareURL: function (){
+      // TODO Detectar el dominio... 
+      return 'http://cocada:3000' + "/project/" + this.$route.params.id + "/" + this.$route.params.version_id + "/share"
     }
-  }*/
+  }
 }
 </script>
 
