@@ -65,7 +65,6 @@ export default {
       errors: {comment: []},
       send: {
         "versionId": this.$route.params.version_id,
-        "replyId": "",
         "comment": "",
         "authorId": this.$auth.$state.user.id,
         "files_list": [],

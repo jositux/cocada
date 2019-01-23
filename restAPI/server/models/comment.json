@@ -16,11 +16,6 @@
       "required": true,
       "index": true
     },
-    "replyId": {
-      "type": "string",
-      "required": false,
-      "index": true
-    },
     "comment": {
       "type": "string",
       "required": true
@@ -45,11 +40,6 @@
       "type": "belongsTo",
       "model": "Users",
       "foreignKey": "authorId"
-    },
-    "reply_from": {
-      "type": "belongsTo",
-      "model": "Version",
-      "foreignKey": "replyId"
     }
   },
   "acls": [],
