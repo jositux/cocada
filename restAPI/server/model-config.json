@@ -64,13 +64,5 @@
   "comment": {
     "dataSource": "db",
     "public": true
-  },
-  "comment_files": {
-    "dataSource": "db",
-    "public": true
-  },
-  "file": {
-    "dataSource": "db",
-    "public": false
   }
 }
