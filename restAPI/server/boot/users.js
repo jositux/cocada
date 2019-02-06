@@ -51,28 +51,28 @@ module.exports = function(app) {
       });
 
     User.find(
-        {where: {and: [{username: 'design'}]}, limit: 1},
+        {where: {and: [{username: 'persona-a'}]}, limit: 1},
         function(err, records) {
           if (!records.length) {
             User.create({
-              username: 'design',
+              username: 'persona-a',
               email: 'desgin@localhost',
-              password: 'design',
+              password: 'persona-a',
               created: datetime,
               lastUpdated: datetime,
             },
             function(err, userInstance) {
-              console.log("Creado usuario 'design' con contraseña 'design'.");
+              console.log("Creado usuario 'persona-a' con contraseña 'persona-a'.");
               console.log(userInstance);
 
               Role.find(
-                {where: {and: [{name: 'design'}]}, limit: 1},
+                {where: {and: [{name: 'cliente'}]}, limit: 1},
                 function(err, records) {
                   if (!records.length) {
                     Role.create({
-                      name: 'admin',
+                      name: 'cliente',
                     }, function(err, roleInstance) {
-                      console.log("Creado el rol 'design'");
+                      console.log("Creado el rol 'cliente'");
                       console.log(roleInstance);
                       if (err) console.log(err);
                       // Asigno el Rol
@@ -90,28 +90,28 @@ module.exports = function(app) {
         });
 
     User.find(
-          {where: {and: [{username: 'client'}]}, limit: 1},
+          {where: {and: [{username: 'persona-b'}]}, limit: 1},
           function(err, records) {
             if (!records.length) {
               User.create({
-                username: 'client',
-                email: 'client@localhost',
-                password: 'client',
+                username: 'persona-b',
+                email: 'persona-b@localhost',
+                password: 'persona-b',
                 created: datetime,
                 lastUpdated: datetime,
               },
               function(err, userInstance) {
-                console.log("Creado usuario 'client' con contraseña 'client'.");
+                console.log("Creado usuario 'persona-b' con contraseña 'persona-b'.");
                 console.log(userInstance);
 
                 Role.find(
-                  {where: {and: [{name: 'client'}]}, limit: 1},
+                  {where: {and: [{name: 'diseñador'}]}, limit: 1},
                   function(err, records) {
                     if (!records.length) {
                       Role.create({
-                        name: 'client',
+                        name: 'diseñador',
                       }, function(err, roleInstance) {
-                        console.log("Creado el rol 'client'");
+                        console.log("Creado el rol 'diseñador'");
                         console.log(roleInstance);
                         if (err) console.log(err);
                         // Asigno el Rol
