@@ -318,7 +318,7 @@ Processor.prototype.createElements = function() {
   element = this.parametersdiv.querySelector("button#updateButton")
   if (element === null) {
     element = document.createElement("button")
-    element.innerHTML = "Update"
+    element.innerHTML = "Actualizar"
     element.id = "updateButton"
   }
   element.onclick = function(e) {
@@ -340,7 +340,7 @@ Processor.prototype.createElements = function() {
   element = document.getElementById("instantUpdateLabel")
   if (element === null) {
     element = document.createElement("label")
-    element.innerHTML = "Instant Update"
+    element.innerHTML = "Modo Automático"
     element.id = "instantUpdateLabel"
   }
   element.setAttribute("for", instantUpdateCheckbox.id)
@@ -348,6 +348,53 @@ Processor.prototype.createElements = function() {
 
   this.enableItems()
   this.clearViewer()
+}
+
+Processor.prototype.updateDownloadLink = function() {
+  var info = this.selectedFormatInfo()
+  var ext = info.extension
+  this.generateOutputFileButton.innerHTML =
+    '<button type="button" class="btn"><div class="btn__content">Generar ' +
+    ext.toUpperCase() +
+    "</div></button>"
+  //"Generar " + ext.toUpperCase()
+}
+
+Processor.prototype.downloadLinkTextForCurrentObject = function() {
+  var ext = this.selectedFormatInfo().extension
+  return (
+    '<button type="button" class="btn primary"><div class="btn__content">Descargar ' +
+    ext.toUpperCase() +
+    "</div></button>"
+  )
+  //return "Descargar " + ext.toUpperCase()
+}
+
+// set status and data to display
+Processor.prototype.setStatus = function(status, data) {
+  if (typeof document !== "undefined") {
+    const statusMap = {
+      error: data,
+      ready: "Listo",
+      aborted: "Cancelado.",
+      busy: `${data} <img id=busy src='/busy.gif'>`,
+      loading: `Cargando ${data} <img id=busy src='/busy.gif'>`,
+      loaded: data,
+      saving: data,
+      saved: data,
+      converting: `Convirtiendo ${data} <img id=busy src='/busy.gif'>`,
+      fetching: `Obteniendo ${data} <img id=busy src='/busy.gif'>`,
+      rendering: `Renderizando. Por favor espere <img id=busy src='/busy.gif'>`
+    }
+    const content = statusMap[status] ? statusMap[status] : data
+    if (status === "error") {
+      this.setError(data)
+    }
+
+    this.statusspan.innerHTML = content
+  } else {
+    log(data)
+  }
 }
 
 // Make screenshot ... black... not work
