@@ -18,4 +18,4 @@ wait_http "http://localhost:3000/"
 echo "Abriendo navegador http://localhost:3000/"
 sleep 5
 
-xdg-open "http://localhost:3000"
+xdg-open "http://cocada:3000"
