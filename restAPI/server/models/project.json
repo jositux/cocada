@@ -27,12 +27,12 @@
   "validations": [],
   "relations": {
     "versions": {
-      "type": "belongsTo",
+      "type": "hasMany",
       "model": "version",
-      "foreignKey": "project_id"
+      "foreignKey": "version_id"
     },
     "author": {
-      "type": "belongsTo",
+      "type": "hasOne",
       "model": "user",
       "foreignKey": "id"
     }
