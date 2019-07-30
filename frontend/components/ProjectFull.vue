@@ -8,6 +8,7 @@
         </v-flex>
         <v-flex d-flex xs3>
             <div>
+            <!--h3 class="text-capitalize">{{project._lastVersion}}</h3-->
             <v-text-field
             outline
             label="Enlace para 

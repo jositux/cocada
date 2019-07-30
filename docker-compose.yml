@@ -67,20 +67,20 @@ services:
     depends_on:
       - db
   
-  cypress:
-    image: node:8.9.4-alpine-e2e
-    build:
-      context: ./docker/e2e
-      dockerfile: Dockerfile
-    user: "node"
-    working_dir: /home/node/app
-    environment:
-      - DISPLAY=unix:0
-      #- CYPRESS_CACHE_FOLDER=/cache/Cypress
-    network_mode: host
-    volumes:
-      - ./test:/home/node/app
-    #command: "npm run cypress:run"
-    command: "npm run cypress:open"
+#  cypress:
+#    image: node:8.9.4-alpine-e2e
+#    build:
+#      context: ./docker/e2e
+#      dockerfile: Dockerfile
+#    user: "node"
+#    working_dir: /home/node/app
+#    environment:
+#      - DISPLAY=unix:0
+#      #- CYPRESS_CACHE_FOLDER=/cache/Cypress
+#    network_mode: host
+#    volumes:
+#      - ./test:/home/node/app
+#    #command: "npm run cypress:run"
+#    command: "npm run cypress:open"
 #    depends_on:
 #      - cocada
