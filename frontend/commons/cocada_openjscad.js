@@ -354,18 +354,18 @@ Processor.prototype.updateDownloadLink = function() {
   var info = this.selectedFormatInfo()
   var ext = info.extension
   this.generateOutputFileButton.innerHTML =
-    '<button type="button" class="btn"><div class="btn__content">Generar ' +
+    '<button type="button" class="btn primary"><div class="btn__content">Generar ' +
     ext.toUpperCase() +
-    "</div></button>"
+    '<i aria-hidden="true" class="icon icon--right theme--dark material-icons">layers</i></div></button>'
   //"Generar " + ext.toUpperCase()
 }
 
 Processor.prototype.downloadLinkTextForCurrentObject = function() {
   var ext = this.selectedFormatInfo().extension
   return (
-    '<button type="button" class="btn primary"><div class="btn__content">Descargar ' +
+    '<button type="button" class="btn success"><div class="btn__content">Descargar ' +
     ext.toUpperCase() +
-    "</div></button>"
+    '<i aria-hidden="true" class="icon icon--right theme--dark material-icons">cloud_download</i></div></button>'
   )
   //return "Descargar " + ext.toUpperCase()
 }
