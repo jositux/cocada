@@ -10,14 +10,14 @@
           <v-flex v-for="ver in versions" xs12>
             <v-card color="" class="black--text">
               <v-layout>
-                <v-flex xs5>
+                <v-flex xs3 class="left-history">
+                  
                   <img
                     :src="getAPI_URL(ver.image)"
-                    height="128px"
-                    width="128px"
+                    class="thumbnail"
                   ></img>
                 </v-flex>
-                <v-flex xs7>
+                <v-flex xs8 class="right-history">
                   <v-card-title primary-title>
                     <div>
                       <nuxt-link :to="'/project/' + $route.params.id + '/' + ver.id">
@@ -83,5 +83,23 @@ export default {
 </script>
 
 <style>
+  .headline {
+    font-size: 12px !important;
+  }
+
+  .left-history {
+    overflow: hidden;
+    margin-left: 15px;
+  }
+
+  .right-history .card__title--primary {
+    padding: 0;
+  }
+
+  .thumbnail {
+    width: 200px;
+    margin-left: -50px;
+    height: auto;
+  }
 
 </style>
