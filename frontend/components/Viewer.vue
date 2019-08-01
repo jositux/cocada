@@ -4,21 +4,29 @@
     <v-flex xs8>
         <v-flex xs12>
           <v-btn v-if="!instantUpdate" @click="do_update" >Actualizar</v-btn>
-          <v-btn @click="resetParameters" >Reiniciar Parámetros</v-btn>
-          <v-btn @click="resetCamera">Reset Camera</v-btn>
-          <v-btn @click="toogleEditor">Ocultar</v-btn>
-          <v-btn @click="openCommit" color="primary">Guardar</v-btn>
+          <!--<v-btn @click="resetParameters" color="primary">Reiniciar Parámetros <v-icon right dark>autorenew</v-icon></v-btn>-->
+          <!--<v-btn @click="resetCamera">Reset Camera</v-btn>-->
+          
+          
           <div oncontextmenu="return false;" id="viewerContext"></div>
         </v-flex>
+
+        <v-btn @click="resetCamera" fab dark small color="primary" class="reload-camera" title="Reset Vista"><v-icon dark>replay</v-icon></v-btn>
+
         <v-flex xs12>
             <div id="parameterContext"></div>
+            <v-btn @click="resetParameters" fab dark small color="primary" title="Valor por defecto"><v-icon dark>autorenew</v-icon></v-btn>
         </v-flex>
+
+        
     </v-flex>
 
     <v-flex xs4 v-bind:class="{ editorHide: editor_hide  }">
           <div id="editFrame">
             <div id="editor"></div>
           </div>
+          <!--<v-btn @click="toogleEditor" fab dark small color="primary"><v-icon right dark>remove_red_eyes</v-icon></v-btn>-->
+          <v-btn @click="openCommit" color="primary">Nueva Versión<v-icon right dark>add</v-icon></v-btn>
     </v-flex>
       </v-layout>
       
@@ -27,8 +35,8 @@
       persistent
       max-width="800"
     >
-      <v-card>
-        <v-card-title class="headline">Guardar el proyecto</v-card-title>
+      <v-card class="new-version">
+        <!--<v-card-title class="headline">Guardar el proyecto</v-card-title>-->
           <v-alert v-if="version_error"
               :value="true"
               color="error"
@@ -288,10 +296,11 @@ export default {
     width: 100%;
     min-height: 500px;
   }
+
   #viewerContext {
     /* ensure that the canvas uses the whole width and height of the document */
     background: white;
-    height: 350px;/* var(window_height); */
+    height: 500px;/* var(window_height); */
     width: 100%;
   }
 
@@ -317,6 +326,14 @@ export default {
     display: none;
   }
 
+  .reload-camera {
+    float: right;
+    margin-top: -100px;
+  }
+
+  .new-version img {
+    max-width: 100%;
+  }
 
 </style>
 

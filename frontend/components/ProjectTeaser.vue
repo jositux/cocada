@@ -1,10 +1,14 @@
 <template>
-  <v-flex xs12>
-    <v-card>
+
+  <v-flex>
+    <v-card class="teaser-row">
       <v-card-title class="headline">{{ title }}</v-card-title>
       <v-card-text>
         <div class="thumbnail">
-          <nuxt-link :to="'/project/' + id"><div class="imagen" :style='"background-image: url(" + getAPI_URL(image) + ");"' :title="title"></div></nuxt-link>
+          <nuxt-link :to="'/project/' + id">
+          <img class="imagen" :src= getAPI_URL(image) :title="title"></img> 
+
+          </nuxt-link>
         </div>
         <div class="description">
           {{ description }}
@@ -29,6 +33,7 @@
       </v-card-actions>
     </v-card>
   </v-flex>
+
 </template>
 
 
@@ -47,10 +52,7 @@ export default {
 
 <style scoped>
 .imagen {
-  height: 500px;
-  width: 500px;
-  background-position: center center;
-  background-size: auto 100%;
+  width: 100%;
 }
 
 .description{
@@ -59,6 +61,10 @@ export default {
   max-height: 70px;
   max-width: 500px;
   overflow: hidden;
+}
+
+.teaser-row {
+  margin-top: 20px;
 }
 
 .card__actions{

@@ -1,34 +1,36 @@
 <template>
     <v-container fluid grid-list-md>
-      <v-layout row wrap>
-        <v-flex d-flex xs9>
+      <h2 class="text-capitalize">{{project.title}}</h2>
+      <v-layout row wrap align-top justify-top row fill-height>
+        <v-flex d-flex lg9>
           <div>
             <Viewer/>
           </div>
         </v-flex>
-        <v-flex d-flex xs3>
+        <v-flex d-flex lg3>
             <div>
-            <!--h3 class="text-capitalize">{{project._lastVersion}}</h3-->
-            <v-text-field
-            outline
-            label="Enlace para 
-            compartir"
-            :value="shareURL()"
-            append-icon="share"
-          ></v-text-field>
+              <v-text-field
+              outline
+              label="Enlace para 
+              compartir"
+              :value="shareURL()"
+              append-icon="share"
+              :append-icon-cb="goShareURL"
+            ></v-text-field>
+            
 
 
                <v-tabs icons-and-text centered light>
-                  <v-tabs-slider color="yellow"></v-tabs-slider>
+                  <v-tabs-slider color="blue"></v-tabs-slider>
                   <v-tab href="#tab-1">
                     <v-icon small>chat</v-icon>
                   </v-tab>
                   <v-tab href="#tab-2">
                     <v-icon small>history</v-icon>
                   </v-tab>
-                  <v-tab href="#tab-3">
+                  <!--<v-tab href="#tab-3">
                     <v-icon small>cloud_upload</v-icon>
-                  </v-tab>
+                  </v-tab>-->
                   <v-tab-item id="tab-1">
                     <v-card flat>
                       <CommentsList :background="getScreenShot"/>
@@ -39,11 +41,11 @@
                       <VersionList/>
                     </v-card>
                   </v-tab-item>
-                  <v-tab-item id="tab-3">
+                  <!--<v-tab-item id="tab-3">
                     <v-card flat>
                       <FileList title="Subir archivos"/>
                     </v-card>
-                  </v-tab-item>
+                  </v-tab-item>-->
                 </v-tabs>
             </div>
         </v-flex>
@@ -87,6 +89,9 @@ export default {
     shareURL: function (){
       // TODO Detectar el dominio... 
       return 'http://cocada:3000' + "/project/" + this.$route.params.id + "/" + this.$route.params.version_id + "/share"
+    },
+    goShareURL: function(){
+      window.location.href=this.shareURL();
     }
   }
 }
