@@ -19,8 +19,8 @@
     "fs": "0.0.1-security",
     "nuxt": "^1.0.0",
     "postcss-loader": "2.1.1",
-    "vue-signature-pad": "^1.1.8",
-    "vuetify": "^1.0.0"
+    "vue-signature-pad": "^1.1.11",
+    "vuetify": "^1.0.19"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.3",
