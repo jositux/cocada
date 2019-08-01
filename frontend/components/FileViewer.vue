@@ -1,9 +1,10 @@
 <template>
-    <div>
-        <v-chip close small @click="modal=true">
-            <a :title="title" class="file-chip">
-                <span v-html= "truncateText(name)" />
-            </a> 
+    <div v-if="!close">
+        <v-chip v-if="showFileInModal(this.mime)" :close="this.files_editable" small @click="modal=true" @input="removeFile">
+           {{truncateText(name)}}
+        </v-chip>
+        <v-chip v-else :close="this.files_editable" small @input="removeFile">
+           <a :href="url">{{truncateText(name)}}</a>
         </v-chip>
         <v-dialog
             v-model="modal"
@@ -28,11 +29,19 @@ export default {
       "url": String,
       "alt": String,
       "name": String,
+      "index": Number,
+      "onClose": Function,
+      "files_editable": Boolean,
+      "mime": String,
   },
   data () {
       return {
           modal: false,
+          close: false, 
       }
+  },
+  created() {
+      console.log(this.files_editable);
   },
   methods: {
       getAPI_URL: function (url){
@@ -40,7 +49,14 @@ export default {
       },
       truncateText: function(filename) {
 			return filename.substring(0,4) + '...' + filename.slice(-8)
-		},
+        },
+      removeFile: function(e){
+          this.close = true;
+          this.onClose(this.index);
+      },
+      showFileInModal: function (mime) {
+            return (mime == 'image/jpeg' || mime == 'image/png' || mime == 'image/gif' || mime == 'image/bmp')
+      },
   }
 }
 </script>

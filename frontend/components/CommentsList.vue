@@ -13,31 +13,33 @@
             </template>
             <template>
               <v-text-field label="Comentario" v-model="send.comment" textarea :error-messages="errors.comment"></v-text-field>
-              <CommentsFiles :files="this.send.files_list"/>
+              <CommentsFiles :files="this.send.files_list" :updateFile="updateFile" files_editable />
               <v-btn flat icon color="blue" @click="$refs.file_upload.click()">
                 <input type="file" ref="file_upload" style="display: none" @change="uploadFile">
-              <v-icon>cloud_upload</v-icon>
+              <v-icon>attach_file</v-icon>
             </v-btn>
-            <v-btn flat icon color="blue" v-on:click="openDraw">
-              <v-icon>brush</v-icon>
+            <v-btn flat icon color="blue" v-on:click="openDraw" title="anotaciones">
+              <v-icon>gesture</v-icon>
             </v-btn>
-              <v-btn color="success" v-on:click="saveAction">Enviar</v-btn>
+              <v-btn tile outline color="success" v-on:click="saveAction">Enviar</v-btn>
 
             <v-dialog
                 v-model="dialogDraw"
                 persistent
-                max-width="800"
+                max-width="880"
               >
                 <v-card>
-                  <v-card-title class="headline">Dibujar</v-card-title>
+                  <!--<v-card-title class="headline">Dibujar</v-card-title>-->
                   <v-card-text>
                   <VueSignaturePad
-                      height="350px"
-                      width="800px"
+                      height="360px"
+                      width="840px"
                       ref="draw"
                     />
-                  <v-btn color="success" v-on:click="saveDraw">Guardar</v-btn>
-                  <v-btn color="error" v-on:click="dialogDraw=false">Cancelar</v-btn>
+                  
+                  <v-btn class="right_close" tile outlined color="error" v-on:click="dialogDraw=false">Cerrar</v-btn>
+                  <v-btn class="right_save" tile outlined color="success" v-on:click="saveDraw">Guardar</v-btn>
+
                   </v-card-text>
                 </v-card>
               </v-dialog>
@@ -73,6 +75,9 @@ export default {
       }
     },
   methods: {
+    updateFile: function(index){
+      this.send.files_list.splice(index, 1);
+    },
     fetchComments: function() {
       this.$axios({
         method: 'get',
@@ -136,7 +141,7 @@ export default {
       }
 
         let draw =       this.$refs.draw.saveSignature();
-        console.log(draw);
+        //console.log(draw);
         let formData = new FormData();
         let timestamp = new Date().getTime();
         let file = dataURLtoFile(draw.data , timestamp + '-draw-' + this.$route.params.id + '-' + this.$route.params.version_id + ".png")
@@ -285,4 +290,11 @@ export default {
   .list__tile--avatar {
     height: auto;
   }
+
+  .right_save, .right_close {
+    float: right;
+    margin-top: -40px;
+  }
+
+
 </style>
