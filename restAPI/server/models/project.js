@@ -5,19 +5,28 @@ module.exports = function(project) {
   project.observe('after save', function(ctx, next) {
     if (ctx.instance.id) {
       const version = project.app.models.Version;
-      version.create({
-        'projectId': ctx.instance.id,
-        'parentVersionId': '', // first version
-        'description': 'Modelo Inicial.',
-        'authorId': ctx.instance.authorId,
-      },
-      function(err, VersionInstance) {
-        console.log('Creada la versión inicial.');
-        ctx.instance._lastVersion = VersionInstance;
-        return next();
-      });
-    } else {
-      return next();
+      // Si no tiene una version "Inicial", la creo.
+      project.app.models.version.find({
+        where: {
+          'projectId': ctx.instance.id,
+        }},
+        function(err, versions) {
+          if (versions.length == 0) {
+            version.create({
+              'projectId': ctx.instance.id,
+              'parentVersionId': '', // first version
+              'description': 'Modelo Inicial.',
+              'authorId': ctx.instance.authorId,
+            },
+            function(err, VersionInstance) {
+              console.log('Creada la versión inicial.');
+              ctx.instance._lastVersion = VersionInstance;
+              return next();
+            });
+          } else {
+            return next();
+          }
+        });
     }
   });
   // calculated current image of project
