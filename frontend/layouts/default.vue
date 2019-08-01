@@ -1,6 +1,6 @@
 <template>
   <v-app light>
-    <v-navigation-drawer
+    <!--<v-navigation-drawer
       :mini-variant.sync="miniVariant"
       :clipped="clipped"
       v-model="drawer"
@@ -23,16 +23,19 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer>-->
     <v-toolbar fixed app :clipped-left="clipped">
-      <v-toolbar-side-icon @click="drawer = !drawer"/>
+      <!--<v-toolbar-side-icon @click="drawer = !drawer"/>
       <v-btn
         icon
         @click.stop="miniVariant = !miniVariant"
       >
         <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"/>
-      </v-btn>
-      <v-toolbar-title v-text="title"/>
+      </v-btn>-->
+      
+        <v-toolbar-title class="main-title">
+          <span @click="goHome">CoCADa</span>
+        </v-toolbar-title>
       <v-spacer></v-spacer>
       <UserSessionIndicator />
     </v-toolbar>
@@ -64,6 +67,19 @@ export default {
       rightDrawer: false,
       title: "CoCADa"
     }
+  },
+  methods: {
+    goHome: function(){
+      // Forece full reload
+      window.location.href='/';
+    }
   }
 }
 </script>
+
+<style scoped>
+.main-title a {
+  color: black;
+  text-decoration: none;
+}
+</style>
