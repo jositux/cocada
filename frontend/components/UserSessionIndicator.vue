@@ -57,7 +57,7 @@
   export default {
     data: () => ({
       items: [
-        { title: 'Editar Perfil', to: '/user/perfil', "datacy": 'profile' },
+        /** { title: 'Editar Perfil', to: '/user/perfil', "datacy": 'profile' }, **/
         { title: 'Cerrar Sesión', to: '#', click: "logoutDialog = true", "datacy": 'logout' },
       ],
       logoutDialog: false
@@ -74,6 +74,8 @@
 
           this.$router.push("user/login");
           this.$forceUpdate();
+          //window.location.href = "user/login"
+
         }
         
     }
