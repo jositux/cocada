@@ -34,7 +34,7 @@
       </v-btn>-->
       
         <v-toolbar-title class="main-title">
-          <span @click="goHome">CoCADa</span>
+          <a @click="goHome">CoCADa</a>
         </v-toolbar-title>
       <v-spacer></v-spacer>
       <UserSessionIndicator />
