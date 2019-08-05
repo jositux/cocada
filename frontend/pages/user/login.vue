@@ -72,7 +72,8 @@ export default {
                     }})
                 .then(result => {
                         this.success = 'Acceso Correcto.'
-                        this.$router.push('/')
+                        //this.$router.push('/')
+                        window.location.href = "/"
                     },
                     error => {
                         //console.dir(JSON.stringify(error.response.data.error.message))

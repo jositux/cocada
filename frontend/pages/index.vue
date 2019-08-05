@@ -3,7 +3,7 @@
     <v-flex lg6 sm4 offset-sm3>
       <v-container fluid grid-list-sm>
         <v-card-text style="position: relative; padding-top: 0px;">
-          <v-btn dark fab absolute top right color="primary"
+          <v-btn v-if="checkNoAdd()" dark fab absolute top right color="primary"
           href="project/new"
           title="Crear uno nuevo"
           class="nuevo">
@@ -47,12 +47,24 @@ export default {
         this.errors.push(e)
       })
   },
+  methods: {
+    checkNoAdd () {
+      // Los roles de loopback son usadas internamente para ACL
+      // TODO: adapt loopback to send role on user/me
+      ;
+      if (this.$auth.$state.user.username == 'admin' || this.$auth.$state.user.username == 'persona-b') {
+        return true;
+      }else{
+        return false;
+      }
+    },
   /*asyncData ({ app }) {
     return app.$axios.get("/Projects")
     .then((res) => {
       return { projects: res.data }
     })
   }*/
+  }
 }
 </script>
 
