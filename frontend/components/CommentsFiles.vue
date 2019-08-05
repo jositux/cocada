@@ -1,7 +1,7 @@
 <template>
     <div>
     <div v-for="(file, index) in files" :key="file.name">
-        <div class="text-xs-center">
+        <div class="text-xs-left">
             <v-chip v-if="!showFileInModal(file.type)" :close="files_editable" small>
                 <a :href="getAPI_URL('/containers/' + file.container + '/download/' + file.name)" :title="file.name" class="file-chip">
                 <span v-html= "truncateText(file.name)" />
