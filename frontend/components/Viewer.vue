@@ -21,8 +21,8 @@
         
     </v-flex>
 
-    <v-flex xs4 v-bind:class="{ editorHide: editor_hide  }">
-          <div id="editFrame">
+    <v-flex xs4>
+          <div id="editFrame" v-bind:class="{ editorHide: editor_hide  }">
             <div id="editor"></div>
           </div>
           <!--<v-btn @click="toogleEditor" fab dark small color="primary"><v-icon right dark>remove_red_eyes</v-icon></v-btn>-->
@@ -143,7 +143,8 @@ export default {
         console.log(e)
         //this.errors.push(e)
       })
-    
+
+      this.editor_hide = this.checkNoEdit()
     },
   methods: {
     getAPI_URL: function (url){
@@ -263,6 +264,16 @@ export default {
       return {
         window_width: window.innerWidth,
         window_height: window.innerHeight,
+      }
+    },
+    checkNoEdit () {
+      // Los roles de loopback son usadas internamente para ACL
+      // TODO: adapt loopback to send role on user/me
+      ;
+      if (this.$auth.$state.user.username == 'admin' || this.$auth.$state.user.username == 'persona-b') {
+        return false;
+      }else{
+        return true;
       }
     },
   },
