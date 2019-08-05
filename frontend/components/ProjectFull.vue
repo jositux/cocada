@@ -1,6 +1,6 @@
 <template>
     <v-container fluid grid-list-md>
-      <h2 class="text-capitalize">{{project.title}}</h2>
+      <h1 class="text-capitalize">{{project.title}} - <span>{{ getCurrentVersionDescription() }}</span></h1>
       <v-layout row wrap align-top justify-top row fill-height>
         <v-flex d-flex lg9>
           <div>
@@ -11,12 +11,12 @@
             <div>
               <v-text-field
               outline
-              label="Enlace para 
-              compartir"
+              :label="getCurrentVersionDescription() + ' ' + getCurrentVersionCreate()"
               :value="shareURL()"
               append-icon="share"
               :append-icon-cb="goShareURL"
             ></v-text-field>
+            
             
 
 
@@ -33,7 +33,7 @@
                   </v-tab>-->
                   <v-tab-item id="tab-1">
                     <v-card flat>
-                      <CommentsList :background="getScreenShot"/>
+                      <CommentsList/>
                     </v-card>
                   </v-tab-item>
                   <v-tab-item id="tab-2">
@@ -72,7 +72,8 @@ export default {
     return {
       project: {},
       errors: [],
-      commitDialog: false
+      commitDialog: false,
+      currentVersion: {},
     };
   },
   created() {
@@ -84,6 +85,16 @@ export default {
       .catch(e => {
         this.errors.push(e);
       });
+
+      this.$axios
+      .$get("/Versions/" + this.$route.params.version_id)
+      .then(response => {
+        this.currentVersion = response;
+      })
+      .catch(e => {
+        console.log(e)
+        //this.errors.push(e)
+      })
   },
   methods: {
     shareURL: function (){
@@ -92,6 +103,17 @@ export default {
     },
     goShareURL: function(){
       window.location.href=this.shareURL();
+    },
+    getCurrentVersionDescription: function() {
+      return this.currentVersion.description;
+    },
+    getCurrentVersionCreate: function() {
+      let created = new Date(this.currentVersion.createdAt);
+      
+      return this.str_pad(created.getDay()) + "/" + this.str_pad(created.getMonth()) + "/" + created.getFullYear() + " " + this.str_pad(created.getHours()) + ":" + this.str_pad(created.getMinutes());
+    },
+    str_pad: function(n) {
+      return String("00" + n).slice(-2);
     }
   }
 }
