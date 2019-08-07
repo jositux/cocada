@@ -43,15 +43,15 @@ else
     exit 1
 fi
 
-echo "Docker: Instalando librerías e2e (cypress.io), espere..."
-docker-compose run cypress npm install -q  > ./log/cypress_npm_install.log 2>&1
-if [ $? -eq 0 ]; then
-    echo "El log se guardo en ./log/cypress_npm_install.log"
-    echo "ok"
-else
-    echo "ERROR: El log se guardo en ./log/cypress_npm_install.log"
-    exit 1
-fi
+# echo "Docker: Instalando librerías e2e (cypress.io), espere..."
+# docker-compose run cypress npm install -q  > ./log/cypress_npm_install.log 2>&1
+# if [ $? -eq 0 ]; then
+#    echo "El log se guardo en ./log/cypress_npm_install.log"
+#    echo "ok"
+#else
+#    echo "ERROR: El log se guardo en ./log/cypress_npm_install.log"
+#    exit 1
+#fi
 
 
 docker-compose rm -s --force  > /dev/null 2>&1
