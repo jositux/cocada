@@ -32,13 +32,14 @@
                   <!--<v-card-title class="headline">Dibujar</v-card-title>-->
                   <v-card-text>
                   <VueSignaturePad
-                      height="360px"
-                      width="840px"
+                      height="530px"
+                      width="850px"
                       ref="draw"
                     />
                   
-                  <v-btn class="right_close" tile outlined color="error" v-on:click="dialogDraw=false">Cerrar</v-btn>
-                  <v-btn class="right_save" tile outlined color="success" v-on:click="saveDraw">Guardar</v-btn>
+                  <!--<v-btn class="right_close" tile outlined color="error" v-on:click="dialogDraw=false">Cancelar</v-btn>-->
+                  <v-btn class="right_save" tile outlined color="success" v-on:click="saveDraw">Aceptar</v-btn>
+                  <v-btn @click="dialogDraw=false" fab dark small color="primary" class="btn-close" title="Cerrar"><v-icon dark>close</v-icon></v-btn>
 
                   </v-card-text>
                 </v-card>
@@ -95,8 +96,8 @@ export default {
       this.dialogDraw = true
       
       // Forzo la redimension del canvas
-      this.$refs.draw.$el.childNodes[0].width=800
-      this.$refs.draw.$el.childNodes[0].height=350
+      this.$refs.draw.$el.childNodes[0].width=850
+      this.$refs.draw.$el.childNodes[0].height=540
 
       this.$refs.draw.clearSignature()
 
@@ -296,5 +297,8 @@ export default {
     margin-top: -40px;
   }
 
+  .btn-close {
+    position: absolute; top: 10px; right: 10px;
+  }
 
 </style>

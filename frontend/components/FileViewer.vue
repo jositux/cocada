@@ -9,15 +9,18 @@
         <v-dialog
             v-model="modal"
             persistent
-            max-width="800"
+            max-width="850"
             >
             <v-card>
-                <v-card-title class="headline">Imagen</v-card-title>
-                <v-card-text>
+                <!--<v-card-title class="headline">Imagen</v-card-title>-->
+                <!--<v-card-text>-->
                 <img :src="url"/>
-                <v-btn color="success" v-on:click="modal=false">Cerrar</v-btn>
-                </v-card-text>
+                <!--<v-btn style="position: relative; right: 10px; top: 10px;" color="primary" v-on:click="modal=false">Cerrar</v-btn>-->
+                <v-btn @click="modal=false" fab dark small color="primary" class="btn-close" title="Cerrar"><v-icon dark>close</v-icon></v-btn>
+                <!--</v-card-text>-->
+
             </v-card>
+             
             </v-dialog>
         </div>
 </template>

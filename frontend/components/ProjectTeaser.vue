@@ -21,12 +21,12 @@
           </v-btn>
         </nuxt-link>
         <nuxt-link :to="'/project/' + id + '/edit'">
-          <v-btn fab dark small color="grey">
+          <v-btn fab dark small color="success">
             <v-icon dark>edit</v-icon>
           </v-btn>
         </nuxt-link>
         <nuxt-link :to="'/project/' + id + '/remove'">
-          <v-btn fab dark small color="grey">
+          <v-btn fab dark small color="primary">
             <v-icon dark>delete</v-icon>
           </v-btn>
         </nuxt-link>
@@ -68,7 +68,7 @@ export default {
 }
 
 .card__actions{
-  top: 79%;
+  bottom: 5%;
   right: 20px;
   position:absolute;
 }
@@ -76,4 +76,6 @@ export default {
 a {
   color: transparent;
 }
+
+
 </style>

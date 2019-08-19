@@ -123,4 +123,14 @@ export default {
   .tabs__div {
     min-width: 33%;
   }
+
+  .text-capitalize span {
+    font-weight: normal;
+    font-style: italic;
+    font-size: 0.7em;
+  }
+
+  a.downloadOutputFileLink {
+    color: #4caf50 !important;
+  }
 </style>
