@@ -3,7 +3,7 @@
   <v-layout row wrap>
     <v-flex xs12>
         
-          <v-btn @click="resetCamera">Reset Camera</v-btn>
+          <v-btn @click="resetCamera" fab dark small color="primary" class="reload-camera" title="Reset Vista"><v-icon dark>replay</v-icon></v-btn>
           <div oncontextmenu="return false;" id="viewerContext"></div>
         
             <div id="parameterContext" style="display:none"></div>
@@ -154,6 +154,10 @@ export default {
 
   .editorHide{
     display: none;
+  }
+
+  a.downloadOutputFileLink {
+    color: #4caf50 !important;
   }
 
 
