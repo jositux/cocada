@@ -69,7 +69,13 @@ export default {
 </script>
 
 <style scoped>
+  @import url('https://fonts.googleapis.com/css?family=Open+Sans|Raleway&display=swap');
+
   .nuevo {
-    margin-top: 30px;
+    margin-top: 37px;
+  }
+
+  .headline {
+    font-family: 'Raleway', sans-serif;
   }
 </style>
