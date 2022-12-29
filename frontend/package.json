@@ -17,8 +17,8 @@
     "@nuxtjs/auth": "^4.5.1",
     "@nuxtjs/axios": "^5.1.1",
     "fs": "0.0.1-security",
-    "nuxt": "^1.0.0",
-    "postcss-loader": "2.1.1",
+    "nuxt": "^3.0.0",
+    "postcss-loader": "7.0.2",
     "vue-signature-pad": "^1.1.11",
     "vuetify": "^1.0.19"
   },
@@ -28,7 +28,7 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^10.2.1",
-    "eslint-loader": "^1.9.0",
+    "eslint-loader": "^4.0.2",
     "eslint-plugin-html": "^3.1.1",
     "eslint-plugin-import": "^2.10.0",
     "eslint-plugin-node": "^5.1.1",
@@ -38,6 +38,6 @@
     "eslint-plugin-vue": "^4.4.0",
     "prettier": "^1.11.1",
     "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1"
+    "stylus-loader": "^7.1.0"
   }
 }
